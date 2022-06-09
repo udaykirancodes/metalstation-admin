@@ -2,6 +2,9 @@
     display: flex;
     flex-flow: row;
 }
+.product{
+    margin-top: 15px;
+}
 .newBtn{
     float: right;
     margin-right: 20px;
