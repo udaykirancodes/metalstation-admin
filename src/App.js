@@ -6,16 +6,18 @@ import {
 } from "react-router-dom";
 import Home from './components/Home';
 import Navbar from './components/Navbar';
-import Products from './components/Products';
-import Newproduct from './components/Newproduct';
-import Order from './components/Order';
-import Newsletter from './components/Newsletter';
-import Review from './components/Review';
-import Customer from './components/Customer';
-import Subscriber from './components/Subscriber';
-import Brand from './components/Brand';
+import Products from './Pages/Products';
+import Newproduct from './Pages/Newproduct';
+import Order from './Pages/Order';
+import Newsletter from './Pages/Newsletter';
+import Review from './Pages/Review';
+import Customer from './Pages/Customer';
+import Subscriber from './Pages/Subscriber';
+import Brand from './Pages/Brand';
 import { useState } from 'react';
 import { Alert } from './components/Alert';
+import Signin from './Pages/Signin';
+import Signup from './Pages/Signup';
 
 function App() {
   const [alert, setAlert] = useState(null);
@@ -45,6 +47,8 @@ function App() {
           <Route exact path='/customer' element={<Customer/>}/>
           <Route exact path='/subscriber' element={<Subscriber/>}/>
           <Route exact path='/brand' element={<Brand showAlert={showAlert}/>}/>
+          <Route exact path='/login' element={<Signin showAlert={showAlert}/>}/>
+          <Route exact path='/signup' element={<Signup showAlert={showAlert}/>}/>
         </Routes>
 
       </Router>
