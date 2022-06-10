@@ -17,7 +17,6 @@ import Brand from './Pages/Brand';
 import { useState } from 'react';
 import { Alert } from './components/Alert';
 import Signin from './Pages/Signin';
-import Signup from './Pages/Signup';
 
 function App() {
   const [alert, setAlert] = useState(null);
@@ -48,7 +47,6 @@ function App() {
           <Route exact path='/subscriber' element={<Subscriber/>}/>
           <Route exact path='/brand' element={<Brand showAlert={showAlert}/>}/>
           <Route exact path='/login' element={<Signin showAlert={showAlert}/>}/>
-          <Route exact path='/signup' element={<Signup showAlert={showAlert}/>}/>
         </Routes>
 
       </Router>

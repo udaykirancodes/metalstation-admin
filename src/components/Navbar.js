@@ -31,7 +31,7 @@ const Navbar = () => {
                     <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
                         <span className="navbar-toggler-icon"></span>
                     </button>
-                    <div className="offcanvas offcanvas-end bg-dark" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel ">
+                    <div className="offcanvas offcanvas-end bg-dark" tabIndex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel ">
                         <div className="offcanvas-header">
                             <h5 className="offcanvas-title" id="offcanvasNavbarLabel">Admin</h5>
                             <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -43,11 +43,11 @@ const Navbar = () => {
                                     <Link className={`nav-link ${location.pathname === '/' ? "active" : ""} my-auto d-inline`} aria-current="page" to="/" reloadDocument>Dashboard</Link>
                                 </li>
                                 <li className="nav-item my-3">
-                                    <i class="fa-solid fa-list my-auto mx-2 d-inline"></i>
+                                    <i className="fa-solid fa-list my-auto mx-2 d-inline"></i>
                                     <Link className={`nav-link ${location.pathname === '/order' ? "active" : ""} my-auto d-inline`} to="/order" reloadDocument>Order</Link>
                                 </li>
                                 <li className="nav-item dropdown my-3">
-                                    <i class="fa-solid fa-cart-flatbed my-auto mx-2 d-inline"></i>
+                                    <i className="fa-solid fa-cart-flatbed my-auto mx-2 d-inline"></i>
                                     <a className="nav-link dropdown-toggle my-auto d-inline " href="/" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Product
                                     </a>
@@ -58,11 +58,11 @@ const Navbar = () => {
                                     </ul>
                                 </li>
                                 <li className="nav-item my-3">
-                                    <i class="fa-solid fa-people-group my-auto mx-2 d-inline"></i>
+                                    <i className="fa-solid fa-people-group my-auto mx-2 d-inline"></i>
                                     <Link className={`nav-link ${location.pathname === '/customer' ? "active" : ""} my-auto d-inline`} to="/customer" reloadDocument>Customers</Link>
                                 </li>
                                 <li className="nav-item dropdown my-3">
-                                    <i class="fa-solid fa-bullhorn my-auto mx-2 d-inline"></i>
+                                    <i className="fa-solid fa-bullhorn my-auto mx-2 d-inline"></i>
                                     <a className="nav-link dropdown-toggle my-auto d-inline" href="/" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Marketing
                                     </a>

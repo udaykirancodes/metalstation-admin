@@ -1,8 +1,8 @@
 import React from 'react'
-
+import './signin.css'
 const Signin = () => {
     return (
-        <div className='mx-auto my-auto'  style={{width:"20%"}}>
+        <div className='signin mx-auto my-auto'>
             <form className='auth-inner'>
                 <h3>Sign In</h3>
                 <div className="mb-3">
