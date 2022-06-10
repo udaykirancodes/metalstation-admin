@@ -69,6 +69,7 @@ const Navbar = () => {
                                     <ul className="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown">
                                         <li><Link className="dropdown-item" to="/newsletter" reloadDocument>Newsletters</Link></li>
                                         <li><Link className="dropdown-item" to="/subscriber" reloadDocument>Subscribers</Link></li>
+                                        <li><Link className="dropdown-item" to="/blog" reloadDocument>Blog</Link></li>
                                     </ul>
 
                                 </li>
