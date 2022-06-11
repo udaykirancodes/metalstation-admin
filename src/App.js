@@ -4,6 +4,7 @@ import {
   Routes,
   Route
 } from "react-router-dom";
+import GlobalState from "./context/GlobalState"
 import Home from './components/Home';
 import Navbar from './components/Navbar';
 import Products from './Pages/Products';
@@ -35,6 +36,7 @@ function App() {
   }
   return (
     <>
+<<<<<<< HEAD
       <Router>
         <Navbar />
         <Alert alert={alert}/>
@@ -52,8 +54,30 @@ function App() {
           <Route exact path='/blog' element={<Blogs showAlert={showAlert}/>}/>
           <Route exact path='/addblog' element={<AddBlog showAlert={showAlert}/>}/>
         </Routes>
+=======
+      <GlobalState>
 
-      </Router>
+          <Router>
+            <Navbar />
+            <Alert alert={alert}/>
+            <Routes>
+              <Route exact path='/' element={<Home/>}/>
+              <Route exact path='/product' element={<Products showAlert={showAlert}/>}/>
+              <Route exact path='/newProduct' element={<Newproduct showAlert={showAlert} />}/>
+              <Route exact path='/order' element={<Order/>}/>
+              <Route exact path='/newsletter' element={<Newsletter showAlert={showAlert}/>}/>
+              <Route exact path='/review' element={<Review/>}/>
+              <Route exact path='/customer' element={<Customer/>}/>
+              <Route exact path='/subscriber' element={<Subscriber/>}/>
+              <Route exact path='/brand' element={<Brand showAlert={showAlert}/>}/>
+              <Route exact path='/login' element={<Signin showAlert={showAlert}/>}/>
+              <Route exact path='/blog' element={<Blogs showAlert={showAlert}/>}/>
+            </Routes>
+
+          </Router>
+      </GlobalState>
+>>>>>>> 20ab00ebb2da4480e43bb1e315632ce0467b0b3b
+
     </>
   );
 }

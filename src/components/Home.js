@@ -1,7 +1,32 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
+import Context from '../context/Context';
+import { AllUsers } from '../urls';
 import './home.css'
 
 const Home = () => {
+    const {SetUsers} = useContext(Context); 
+    const navigate = useNavigate(); 
+    // useEffect(()=>{
+    //     let adminToken = localStorage.getItem('adminToken'); 
+    //     if(!adminToken){
+    //         navigate('/login'); 
+    //     }
+    //     fetch(AllUsers , {
+    //         method:"GET",
+    //         headers: {
+    //             'Content-Type':'application/json',
+    //             'adminToken':adminToken 
+    //         }
+    //     })
+    //     .then((res)=> res.json())
+    //     .then((data)=>{
+    //         if(data.success === true){
+    //             SetUsers(data.users); 
+    //         }
+    //     })
+    // },[])
+       
     return (
         <>
             <div className="home" >

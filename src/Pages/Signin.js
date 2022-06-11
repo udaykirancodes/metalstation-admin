@@ -1,8 +1,63 @@
-import React from 'react'
-import './signin.css'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import {Alert} from "../components/Alert"
+import {AdminLogin} from '../urls'; 
 const Signin = () => {
+    const navigate = useNavigate(); 
+    const [input , setInput] = useState({
+        email : '',
+        password : ''
+    })
+
+    const [alert , setAlert ] = useState({
+        type : 'danger' , 
+        msg : 'hello wolrd',
+        state : false  
+    }); 
+
+    const handleInput = (e)=>{
+        console.log(input); 
+        setInput({...input , [e.target.name ] : e.target.value})
+    }
+
+    const handleSubmit = (e)=> {
+        e.preventDefault(); 
+        fetch(AdminLogin , {
+            method:"POST",
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body : JSON.stringify(input)
+        })
+        .then((res)=> res.json())
+        .then((data)=>{
+            if(data.success === true){
+                let adminToken = data.adminToken; 
+                localStorage.setItem('adminToken',adminToken); 
+                navigate('/')
+            }
+            else{
+                setAlert({
+                    type:'danger',
+                    msg : data.msg , 
+                    state:true 
+                })
+                setTimeout(() => {
+                    setAlert({
+                        state:false 
+                    })
+                }, 5000);
+            }
+        })
+    }
     return (
-        <div className='signin mx-auto my-auto'>
+        <>
+        
+        <div className='mx-auto my-auto'  style={{width:"20%"}}>
+            <div className='my-5'>{
+                    alert.state &&  <Alert alert={alert}  />
+                }
+            </div>
             <form className='auth-inner'>
                 <h3>Sign In</h3>
                 <div className="mb-3">
@@ -11,6 +66,8 @@ const Signin = () => {
                         type="email"
                         className="form-control"
                         placeholder="Enter email"
+                        name='email'
+                        onChange={handleInput}
                     />
                 </div>
                 <div className="mb-3">
@@ -19,6 +76,8 @@ const Signin = () => {
                         type="password"
                         className="form-control"
                         placeholder="Enter password"
+                        name='password'
+                        onChange={handleInput}
                     />
                 </div>
                 <div className="mb-3">
@@ -34,12 +93,15 @@ const Signin = () => {
                     </div>
                 </div>
                 <div className="d-grid">
-                    <button type="submit" className="btn btn-primary">
+                    <button type="submit" onClick={(e)=>handleSubmit(e)} className="btn btn-primary">
                         Submit
                     </button>
                 </div>
             </form>
         </div>
+
+        </>
+
     )
 }
 
