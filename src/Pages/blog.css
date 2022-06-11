@@ -12,13 +12,9 @@
     margin-right: 10px;
 }
 .blog_head_search{
-    width: 60%;
+    width: 40%;
     margin-bottom: 20px;
-    margin-left: 73%;
-}
-.add_blog{
-    border: 1px solid whitesmoke;
-    padding: 10px 10px;
+    margin-left: 28%;
 }
 @media (max-width: 800px) {
     .blog {

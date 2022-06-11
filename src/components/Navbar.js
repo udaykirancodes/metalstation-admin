@@ -70,6 +70,7 @@ const Navbar = () => {
                                         <li><Link className="dropdown-item" to="/newsletter" reloadDocument>Newsletters</Link></li>
                                         <li><Link className="dropdown-item" to="/subscriber" reloadDocument>Subscribers</Link></li>
                                         <li><Link className="dropdown-item" to="/blog" reloadDocument>Blog</Link></li>
+                                        <li><Link className="dropdown-item" to="/addblog" reloadDocument>Publish Blog</Link></li>
                                     </ul>
 
                                 </li>

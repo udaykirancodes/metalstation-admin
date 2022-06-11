@@ -18,6 +18,7 @@ import { useState } from 'react';
 import { Alert } from './components/Alert';
 import Signin from './Pages/Signin';
 import Blogs from './Pages/Blogs';
+import AddBlog from './Pages/AddBlog';
 
 function App() {
   const [alert, setAlert] = useState(null);
@@ -49,6 +50,7 @@ function App() {
           <Route exact path='/brand' element={<Brand showAlert={showAlert}/>}/>
           <Route exact path='/login' element={<Signin showAlert={showAlert}/>}/>
           <Route exact path='/blog' element={<Blogs showAlert={showAlert}/>}/>
+          <Route exact path='/addblog' element={<AddBlog showAlert={showAlert}/>}/>
         </Routes>
 
       </Router>
