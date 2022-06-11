@@ -1,5 +1,6 @@
 .order{
     display: flex;
+    margin-top: 3%;
 }
 th, td{
     padding-top: 10px;

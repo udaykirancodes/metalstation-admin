@@ -29,7 +29,7 @@ const Home = () => {
        
     return (
         <>
-            <div className="home" >
+            <div className="home my-4" >
                 <div className="home_content" >
                     <div className="home_inside">
                         <h7>Total Customer</h7>
@@ -63,25 +63,25 @@ const Home = () => {
             <h2 style={{ marginTop: '20px', marginLeft: '20px' }}>Order Information</h2>
             <hr />
             <div className="Order">
-                <div className="Order_Info my-auto">
+                <div className="Order_Info my-4">
                     <div className="Order_inside">
                         <i class="fa-solid fa-book-bookmark my-auto mx-2 d-inline"></i>
                         <h4 className='d-inline my-auto mx-4'>Order Placed: 0</h4>
                     </div>
                 </div>
-                <div className="Order_Info my-auto">
+                <div className="Order_Info my-4">
                     <div className="Order_inside">
                         <i class="fa-solid fa-circle-check my-auto mx-2 d-inline"></i>
                         <h4 className='d-inline my-auto mx-4'>Order Confirmed: 0</h4>
                     </div>
                 </div>
-                <div className="Order_Info my-auto">
+                <div className="Order_Info my-4">
                     <div className="Order_inside">
                         <i class="fa-solid fa-box-archive my-auto mx-2 d-inline"></i>
                         <h4 className='d-inline my-auto mx-4'>Order Processed: 0</h4>
                     </div>
                 </div>
-                <div className="Order_Info my-auto">
+                <div className="Order_Info my-4">
                     <div className="Order_inside">
                         <i class="fa-solid fa-truck my-auto mx-2 d-inline"></i>
                         <h4 className='d-inline my-auto mx-4'>Order Delivered: 0</h4>
