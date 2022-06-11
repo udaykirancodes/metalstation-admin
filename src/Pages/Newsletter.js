@@ -62,8 +62,9 @@ const Newsletter = (props) => {
         showAlert("NewLetter Send Successfully!!!", "success")
     }
 
-
+    // selected emails 
     const [selected, setSelected] = useState([]);
+
     return (
         <div className='cotainer mx-4 ' style={{ marginTop: '1%' }}>
             <form className='mx-4 newsletter' onSubmit={handleSubmit}>
