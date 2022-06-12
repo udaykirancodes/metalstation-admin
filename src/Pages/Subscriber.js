@@ -61,6 +61,7 @@ const Subscriber = () => {
             {
                alert.state && <Alert alert={alert} />
             }
+            
             <div className="subscriber d-flex" style={{  marginBottom: '20px' }}>
                 <div className="subscriber_head head" style={{ marginRight: '44%', marginLeft: '20px' }}>
                     <h4>All Subscribers</h4>
