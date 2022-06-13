@@ -83,8 +83,12 @@ const Newproduct = (props) => {
                         <label for="price" class="form-label">Price</label>
                         <input type="text" class="form-control" id="price" />
                     </div>
+                    <div class="col-md-4">
+                        <label for="price" class="form-label">Quantity</label>
+                        <input type="text" class="form-control" id="price" />
+                    </div>
 
-                    <div class="mb-3">
+                    <div class="col-md-8">
                         <label for="formFileMultiple" class="form-label">Product Image</label>
                         <input class="form-control" type="file" id="formFileMultiple" multiple accept=".jpeg,.jpg,.png" />
                     </div>

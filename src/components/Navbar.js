@@ -71,11 +71,19 @@ const Navbar = () => {
                                         <li><Link className="dropdown-item" to="/newsletter" >Newsletters</Link></li>
                                         <li><Link className="dropdown-item" to="/subscriber" >Subscribers</Link></li>
                                         <li><Link className="dropdown-item" to="/blog" >Blog</Link></li>
-
-                                        <li><Link className="dropdown-item" to="/newsletter" reloadDocument>Newsletters</Link></li>
-                                        <li><Link className="dropdown-item" to="/subscriber" reloadDocument>Subscribers</Link></li>
-                                        <li><Link className="dropdown-item" to="/blog" reloadDocument>Blog</Link></li>
                                         <li><Link className="dropdown-item" to="/addblog" reloadDocument>Publish Blog</Link></li>
+                                    </ul>
+
+                                </li>
+                                <li className="nav-item dropdown my-3">
+                                    <i className="fa-solid fa-trash-arrow-up my-auto mx-2 d-inline"></i>
+                                    <a className="nav-link dropdown-toggle my-auto d-inline" href="/" id="offcanvasNavbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Trash
+                                    </a>
+                                    <ul className="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown">
+
+                                        <li><Link className="dropdown-item" to="/trashproduct" >Trash Product</Link></li>
+                                        <li><Link className="dropdown-item" to="/trashblog" >Trash Blog</Link></li>
                                     </ul>
 
                                 </li>

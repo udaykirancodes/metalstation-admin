@@ -1,16 +1,25 @@
-import React, { useRef } from 'react'
+import React from 'react'
+import { useState } from 'react'
+import { useRef } from 'react'
 import { Link } from 'react-router-dom'
-import './product.css'
+import Select from 'react-select'
 
-const Products = (props) => {
+const Trashproduct = (props) => {
     const { showAlert } = props
     const ref = useRef(null)
     const refClose = useRef(null)
+    const options = [
+        { value: 'stell', label: 'Stell' },
+        { value: 'aluminum', label: 'Aluminum' },
+        { value: 'copper', label: 'Copper' },
+    ];
 
-    const handleDelete = () => {
-        showAlert("your product has been Deleted", "success")
+    const [state, setState] = useState('')
 
-    }
+    const handleChange = selectedOption => {
+        setState({ selectedOption });
+    };
+    const { selectedOption } = state;
     const handleEdit = () => {
         ref.current.click();
     }
@@ -20,7 +29,6 @@ const Products = (props) => {
         e.preventDefault();
     }
     return (
-
         <>
             <button type="button" ref={ref} className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Launch demo modal
@@ -30,24 +38,24 @@ const Products = (props) => {
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">Update Product</h5>
+                            <h5 className="modal-title" id="exampleModalLabel">Restore Product</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
                             <form class="row g-3">
-                                <div class="col-md-6">
-                                    <label for="name" class="form-label">Name of the Product</label>
+                                <div class="col-md-4">
+                                    <label for="name" class="form-label">Product Name</label>
                                     <input type="text" class="form-control" id="name" />
                                 </div>
-                                {/* <div class="col-md-4">
+                                <div class="col-md-4">
                                     <label for="category" class="form-label">Category</label>
                                     <Select isMulti={true}
                                         value={selectedOption}
                                         onChange={handleChange}
                                         options={options} id="category" class="form-select">
                                     </Select>
-                                </div> */}
-                                <div class="col-md-2">
+                                </div>
+                                <div class="col-md-4">
                                     <label for="subCategory" class="form-label">SubCategory</label>
                                     <select id="subCategory" class="form-select">
                                         <option value=" ">Choose...</option>
@@ -57,7 +65,7 @@ const Products = (props) => {
                                     </select>
 
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <label for="modelName" class="form-label">Model Name</label>
                                     <input type="text" class="form-control" id="modelName" />
                                 </div>
@@ -69,34 +77,24 @@ const Products = (props) => {
                                         <option>Hundai</option>
                                     </select>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-4">
                                     <label for="price" class="form-label">Price</label>
                                     <input type="text" class="form-control" id="price" />
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="price" class="form-label">Quantity</label>
+                                    <input type="text" class="form-control" id="price" />
+                                </div>
+
+                                <div class="col-md-8">
+                                    <label for="formFileMultiple" class="form-label">Product Image</label>
+                                    <input class="form-control" type="file" id="formFileMultiple" multiple accept=".jpeg,.jpg,.png" />
                                 </div>
                             </form>
                         </div>
                         <div className="modal-footer">
                             <button ref={refClose} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary" onClick={handleClick}>Update Product</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* <!-- Modal for deletion--> */}
-            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Removing Product</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            Product will move to TRASH PRODUCT...
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" onClick={handleDelete} data-bs-dismiss="modal">Remove Product</button>
+                            <button type="button" className="btn btn-primary" onClick={handleClick}>Restore Product</button>
                         </div>
                     </div>
                 </div>
@@ -106,7 +104,7 @@ const Products = (props) => {
                     <button type="button" className="btn btn-primary newBtn">Add New Product</button>
                 </Link>
                 <div className="product_head">
-                    <h4 style={{ marginLeft: '20px' }}>All Product</h4>
+                    <h4 style={{ marginLeft: '20px' }}>Trashed Product</h4>
                 </div>
                 <hr />
                 <div className="product_info">
@@ -118,10 +116,7 @@ const Products = (props) => {
                             <th>Sub Category</th>
                             <th>Modal Name</th>
                             <th>Brand</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Status</th>
-                            <th>Update Product</th>
+                            <th>Restore Product</th>
                         </tr>
                         <tr>
                             <td>-</td>
@@ -130,10 +125,7 @@ const Products = (props) => {
                             <td>-</td>
                             <td>-</td>
                             <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td><i class="fa-solid fa-square-minus mx-2" role='button' data-bs-toggle="modal" data-bs-target="#staticBackdrop"></i><i class="fa-solid fa-file-pen mx-2" role='button' onClick={handleEdit}></i> </td>
+                            <td><i class="fa-solid fa-trash-can-arrow-up mx-2" role='button' onClick={handleEdit}></i></td>
                         </tr>
                     </table>
                 </div>
@@ -142,4 +134,4 @@ const Products = (props) => {
     )
 }
 
-export default Products
+export default Trashproduct
