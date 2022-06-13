@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import {Alert} from "../components/Alert"
 import {AdminLogin} from '../urls'; 
+import './signin.css'
 const Signin = () => {
     const navigate = useNavigate(); 
     const [input , setInput] = useState({
@@ -53,7 +54,7 @@ const Signin = () => {
     return (
         <>
         
-        <div className='mx-auto my-auto'  style={{width:"20%"}}>
+        <div className='signin mx-auto my-auto' >
             <div className='my-5'>{
                     alert.state &&  <Alert alert={alert}  />
                 }

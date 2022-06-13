@@ -55,7 +55,6 @@ const Subscriber = () => {
         })
     },[])
 
-    const {users} = useContext(Context); 
      return (
         <>
             {
@@ -77,7 +76,6 @@ const Subscriber = () => {
                             <th>Name</th>
                         </tr>
                         {
-                            subscribers.length && 
                             subscribers.map((element,index)=>{
                                 if(element.subscribed){
                                     return <tr>
