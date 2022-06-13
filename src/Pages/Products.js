@@ -1,5 +1,6 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { GetAllProducts } from '../urls'
 import './product.css'
 
 const Products = (props) => {
@@ -19,6 +20,29 @@ const Products = (props) => {
         showAlert("your product has been updated", "success")
         e.preventDefault();
     }
+
+    // state 
+    const [products , setProducts ] = useState([]); 
+
+    // fetch all the products :: 
+    useEffect(()=>{
+        fetch(GetAllProducts,{
+            method:"GET",
+            headers:{
+                'Content-Type':'application/json'
+            }
+        })
+        .then((res)=>res.json())
+        .then(data => {
+            if(data.success){
+                setProducts(data.products); 
+                showAlert("Fetched Successfully",'success'); 
+            }
+            else{
+                showAlert(data.msg,'danger'); 
+            }
+        })
+    },[])
     return (
 
         <>
@@ -39,14 +63,7 @@ const Products = (props) => {
                                     <label for="name" class="form-label">Name of the Product</label>
                                     <input type="text" class="form-control" id="name" />
                                 </div>
-                                {/* <div class="col-md-4">
-                                    <label for="category" class="form-label">Category</label>
-                                    <Select isMulti={true}
-                                        value={selectedOption}
-                                        onChange={handleChange}
-                                        options={options} id="category" class="form-select">
-                                    </Select>
-                                </div> */}
+                                
                                 <div class="col-md-2">
                                     <label for="subCategory" class="form-label">SubCategory</label>
                                     <select id="subCategory" class="form-select">
@@ -121,16 +138,21 @@ const Products = (props) => {
                             <th>Price</th>
                             <th>Upadte Product</th>
                         </tr>
-                        <tr>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td><i class="fa-solid fa-trash mx-2" role='button' data-bs-toggle="modal" data-bs-target="#staticBackdrop"></i> <i class="fa-solid fa-file-pen mx-2" role='button' onClick={handleEdit}></i> </td>
-                        </tr>
+                        {
+                            products.map((element,index)=>{
+                                return <tr>
+                                <td>{index+1}</td>
+                                <td>{element.name}</td>
+                                <td>{element.category}</td>
+                                <td>-</td>
+                                <td>{element.details.modelname}</td>
+                                <td>{element.details.brand}</td>
+                                <td>{element.price}</td>
+                                <td><i class="fa-solid fa-trash mx-2" role='button' data-bs-toggle="modal" data-bs-target="#staticBackdrop"></i> <i class="fa-solid fa-file-pen mx-2" role='button' onClick={handleEdit}></i> </td>
+                            </tr>
+                            })
+                        }
+                        
                     </table>
                 </div>
             </div>

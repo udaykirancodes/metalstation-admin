@@ -15,7 +15,7 @@ import Review from './Pages/Review';
 import Customer from './Pages/Customer';
 import Subscriber from './Pages/Subscriber';
 import Brand from './Pages/Brand';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Alert } from './components/Alert';
 import Signin from './Pages/Signin';
 import Blogs from './Pages/Blogs';
@@ -25,7 +25,6 @@ function App() {
   const [alert, setAlert] = useState(null);
 
   const showAlert = (message, type) => {
-    
     setAlert({
       msg: message,
       type: type
@@ -34,6 +33,8 @@ function App() {
       setAlert(null)
     }, 3000);
   }
+ 
+ 
   return (
     <>
       <GlobalState>
