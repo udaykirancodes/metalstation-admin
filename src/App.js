@@ -32,7 +32,7 @@ function App() {
     })
     setTimeout(() => {
       setAlert(null)
-    }, 1500);
+    }, 3000);
   }
   return (
     <>
@@ -53,7 +53,7 @@ function App() {
               <Route exact path='/brand' element={<Brand showAlert={showAlert}/>}/>
               <Route exact path='/login' element={<Signin showAlert={showAlert}/>}/>
               <Route exact path='/blog' element={<Blogs showAlert={showAlert}/>}/>
-              <Route exact path='/addblog' element={<Blogs showAlert={showAlert}/>}/>
+              <Route exact path='/addblog' element={<AddBlog showAlert={showAlert}/>}/>
             </Routes>
 
           </Router>

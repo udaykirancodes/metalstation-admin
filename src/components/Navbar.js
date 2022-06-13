@@ -40,11 +40,11 @@ const Navbar = () => {
                             <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
                                 <li className="nav-item my-3">
                                     <i className="fa-solid fa-chart-line my-auto mx-2 d-inline"></i>
-                                    <Link className={`nav-link ${location.pathname === '/' ? "active" : ""} my-auto d-inline`} aria-current="page" to="/" reloadDocument>Dashboard</Link>
+                                    <Link className={`nav-link ${location.pathname === '/' ? "active" : ""} my-auto d-inline`} aria-current="page" to="/" >Dashboard</Link>
                                 </li>
                                 <li className="nav-item my-3">
                                     <i className="fa-solid fa-list my-auto mx-2 d-inline"></i>
-                                    <Link className={`nav-link ${location.pathname === '/order' ? "active" : ""} my-auto d-inline`} to="/order" reloadDocument>Order</Link>
+                                    <Link className={`nav-link ${location.pathname === '/order' ? "active" : ""} my-auto d-inline`} to="/order" >Order</Link>
                                 </li>
                                 <li className="nav-item dropdown my-3">
                                     <i className="fa-solid fa-cart-flatbed my-auto mx-2 d-inline"></i>
@@ -52,14 +52,14 @@ const Navbar = () => {
                                         Product
                                     </a>
                                     <ul className="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown">
-                                        <li><Link className="dropdown-item" to="/product" reloadDocument>Products</Link></li>
-                                        <li><Link className="dropdown-item" to="/brand" reloadDocument>Brand</Link></li>
-                                        <li><Link className="dropdown-item" to="/review" reloadDocument>Review</Link></li>
+                                        <li><Link className="dropdown-item" to="/product" >Products</Link></li>
+                                        <li><Link className="dropdown-item" to="/brand" >Brand</Link></li>
+                                        <li><Link className="dropdown-item" to="/review" >Review</Link></li>
                                     </ul>
                                 </li>
                                 <li className="nav-item my-3">
                                     <i className="fa-solid fa-people-group my-auto mx-2 d-inline"></i>
-                                    <Link className={`nav-link ${location.pathname === '/customer' ? "active" : ""} my-auto d-inline`} to="/customer" reloadDocument>Customers</Link>
+                                    <Link className={`nav-link ${location.pathname === '/customer' ? "active" : ""} my-auto d-inline`} to="/customer" >Customers</Link>
                                 </li>
                                 <li className="nav-item dropdown my-3">
                                     <i className="fa-solid fa-bullhorn my-auto mx-2 d-inline"></i>
@@ -67,6 +67,11 @@ const Navbar = () => {
                                         Marketing
                                     </a>
                                     <ul className="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown">
+
+                                        <li><Link className="dropdown-item" to="/newsletter" >Newsletters</Link></li>
+                                        <li><Link className="dropdown-item" to="/subscriber" >Subscribers</Link></li>
+                                        <li><Link className="dropdown-item" to="/blog" >Blog</Link></li>
+
                                         <li><Link className="dropdown-item" to="/newsletter" reloadDocument>Newsletters</Link></li>
                                         <li><Link className="dropdown-item" to="/subscriber" reloadDocument>Subscribers</Link></li>
                                         <li><Link className="dropdown-item" to="/blog" reloadDocument>Blog</Link></li>
