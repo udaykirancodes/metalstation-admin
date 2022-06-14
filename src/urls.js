@@ -10,3 +10,4 @@ export const EditBlogUrl = backendurl+'blogs/edit';
 export const AddBlogUrl = backendurl+'blogs/add';
 export const SendEmailUrl = backendurl+'emails/send';
 export const GetAllProducts = backendurl+'products/find/all';
+export const ProductDeleteUrl = backendurl+'products/delete';

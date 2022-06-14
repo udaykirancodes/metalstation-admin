@@ -1,25 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { GetAllProducts } from '../urls'
+import { Link, useNavigate } from 'react-router-dom'
+import { GetAllProducts , ProductDeleteUrl} from '../urls'
 import './product.css'
 
 const Products = (props) => {
+    const navigate = useNavigate(); 
     const { showAlert } = props
     const ref = useRef(null)
     const refClose = useRef(null)
 
-    const handleDelete = () => {
-        showAlert("your product has been Deleted", "success")
 
-    }
-    const handleEdit = () => {
-        ref.current.click();
-    }
-    const handleClick = (e) => {
-        refClose.current.click()
-        showAlert("your product has been updated", "success")
-        e.preventDefault();
-    }
 
     // state 
     const [products , setProducts ] = useState([]); 
@@ -43,14 +33,68 @@ const Products = (props) => {
             }
         })
     },[])
+    // store id 
+    const [id , setId] = useState('');
+    
+    // function to delete the product 
+    const DeleteProduct = ()=>{
+        console.log('deleting'); 
+        if(!id){
+            showAlert("Cannot Delete",'danger');
+            return ;
+        }
+        console.log('hello'); 
+        // deleting the blog 
+        let adminToken = localStorage.getItem('adminToken'); 
+        if(!adminToken){
+            navigate('/login'); 
+        }
+        fetch(ProductDeleteUrl , {
+            method:"PUT",
+            headers: {
+                'Content-Type':'application/json',
+                'adminToken':adminToken 
+            },
+            body : JSON.stringify({
+                id : id 
+            })
+
+        })
+        .then((res)=> res.json())
+        .then((data)=>{
+            console.log(data); 
+            if(data.success === true){
+                // delete in the frontend
+                let newProducts = products.filter((element)=>{
+                    if(element._id !== id){
+                        return element  
+                    }
+                    else{
+                        element.isDeleted = true ; 
+                        return element 
+                    }
+                })
+                setProducts(newProducts); 
+                setId(''); 
+                showAlert("Deleted Successfully",'success'); 
+            }
+            else{
+                showAlert(data.msg,'danger'); 
+            }
+        })
+        .catch(err=>{
+            console.log(err.message); 
+        })
+    }
     return (
 
         <>
+            {/* Model For Editing */}
             <button type="button" ref={ref} className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Launch demo modal
             </button>
 
-            <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal fade" id="modelforedit" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -94,7 +138,7 @@ const Products = (props) => {
                         </div>
                         <div className="modal-footer">
                             <button ref={refClose} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary" onClick={handleClick}>Update Product</button>
+                            <button type="button" className="btn btn-primary" >Update Product</button>
                         </div>
                     </div>
                 </div>
@@ -109,11 +153,11 @@ const Products = (props) => {
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            ...
+                            Are you sure ? Move to Trash!!!
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" onClick={handleDelete} data-bs-dismiss="modal">Delete Product</button>
+                            <button type="button" class="btn btn-primary" onClick={DeleteProduct} data-bs-dismiss="modal">Delete Product</button>
                         </div>
                     </div>
                 </div>
@@ -132,23 +176,28 @@ const Products = (props) => {
                             <th>#</th>
                             <th>Name</th>
                             <th>Category</th>
-                            <th>Sub Category</th>
+                            <th>Description</th>
                             <th>Modal Name</th>
                             <th>Brand</th>
                             <th>Price</th>
+                            <th>State</th>
                             <th>Upadte Product</th>
                         </tr>
                         {
                             products.map((element,index)=>{
-                                return <tr>
+                                return <tr key={index}>
                                 <td>{index+1}</td>
                                 <td>{element.name}</td>
                                 <td>{element.category}</td>
-                                <td>-</td>
+                                <td>{element.description}</td>
                                 <td>{element.details.modelname}</td>
                                 <td>{element.details.brand}</td>
                                 <td>{element.price}</td>
-                                <td><i class="fa-solid fa-trash mx-2" role='button' data-bs-toggle="modal" data-bs-target="#staticBackdrop"></i> <i class="fa-solid fa-file-pen mx-2" role='button' onClick={handleEdit}></i> </td>
+                                <td>{element.isDeleted ? "Out of Stock" : "In Stock"}</td>
+                                <td>
+                                    <i class="fa-solid fa-trash mx-2" role='button' data-bs-toggle="modal" data-bs-target="#staticBackdrop" onClick={()=>setId(element._id)}>D</i> 
+                                    <i class="fa-solid fa-file-pen mx-2" role='button' data-bs-toggle="modal" data-bs-target="#modelforedit" onClick={()=>setId(element._id)}>E</i> 
+                                </td>
                             </tr>
                             })
                         }

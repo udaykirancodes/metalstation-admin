@@ -44,6 +44,7 @@ const AddBlog = (props) => {
         .then((data)=>{
             console.log(data); 
             if(data.success === true){
+                setblog(null); 
                 showAlert("Blog Added Successfully ","success"); 
             }
             else{
