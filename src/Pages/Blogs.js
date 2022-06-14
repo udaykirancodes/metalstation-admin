@@ -26,30 +26,30 @@ const Blogs = (props) => {
 
 
     // fetch blogs & show the blogs 
-    // useEffect(()=>{
-    //     let adminToken = localStorage.getItem('adminToken'); 
-    //     if(!adminToken){
-    //         navigate('/login'); 
-    //     }
-    //     fetch(AllBlgos , {
-    //         method:"GET",
-    //         headers: {
-    //             'Content-Type':'application/json',
-    //             'adminToken':adminToken 
-    //         }
-    //     })
-    //     .then((res)=> res.json())
-    //     .then((data)=>{
-    //         console.log(data); 
-    //         if(data.success === true){
-    //             setblogs(data.data); 
-    //             showAlert("Fetched Successfully",'success'); 
-    //         }
-    //         else{
-    //             showAlert(data.msg,'danger'); 
-    //         }
-    //     })
-    // } ,[])
+    useEffect(()=>{
+        let adminToken = localStorage.getItem('adminToken'); 
+        if(!adminToken){
+            navigate('/login'); 
+        }
+        fetch(AllBlgos , {
+            method:"GET",
+            headers: {
+                'Content-Type':'application/json',
+                'adminToken':adminToken 
+            }
+        })
+        .then((res)=> res.json())
+        .then((data)=>{
+            console.log(data); 
+            if(data.success === true){
+                setblogs(data.data); 
+                showAlert("Fetched Successfully",'success'); 
+            }
+            else{
+                showAlert(data.msg,'danger'); 
+            }
+        })
+    } ,[])
 
     // function to delt a blog 
     const DeleteBlog = () => {
