@@ -47,7 +47,7 @@ const Products = (props) => {
                                         options={options} id="category" class="form-select">
                                     </Select>
                                 </div> */}
-                                <div class="col-md-2">
+                                <div class="col-md-6">
                                     <label for="subCategory" class="form-label">SubCategory</label>
                                     <select id="subCategory" class="form-select">
                                         <option value=" ">Choose...</option>
@@ -102,11 +102,15 @@ const Products = (props) => {
                 </div>
             </div>
             <div className="product">
+
                 <Link to="/newProduct">
                     <button type="button" className="btn btn-primary newBtn">Add New Product</button>
                 </Link>
                 <div className="product_head">
                     <h4 style={{ marginLeft: '20px' }}>All Product</h4>
+                    <div className="product_search">
+                        <input type="text" className="form-control" id="price" placeholder='Search By Name' />
+                    </div>
                 </div>
                 <hr />
                 <div className="product_info">
@@ -114,6 +118,7 @@ const Products = (props) => {
                         <tr>
                             <th>#</th>
                             <th>Name</th>
+                            <th>Description</th>
                             <th>Category</th>
                             <th>Sub Category</th>
                             <th>Modal Name</th>
@@ -124,6 +129,7 @@ const Products = (props) => {
                             <th>Update Product</th>
                         </tr>
                         <tr>
+                            <td>-</td>
                             <td>-</td>
                             <td>-</td>
                             <td>-</td>

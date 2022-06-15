@@ -43,6 +43,10 @@ const Navbar = () => {
                                     <Link className={`nav-link ${location.pathname === '/' ? "active" : ""} my-auto d-inline`} aria-current="page" to="/" >Dashboard</Link>
                                 </li>
                                 <li className="nav-item my-3">
+                                    <i className="fa-solid fa-circle-question my-auto mx-2 d-inline"></i>
+                                    <Link className={`nav-link ${location.pathname === '/enquire' ? "active" : ""} my-auto d-inline`} aria-current="page" to="/enquiry" >Enquiry</Link>
+                                </li>
+                                <li className="nav-item my-3">
                                     <i className="fa-solid fa-list my-auto mx-2 d-inline"></i>
                                     <Link className={`nav-link ${location.pathname === '/order' ? "active" : ""} my-auto d-inline`} to="/order" >Order</Link>
                                 </li>
@@ -53,6 +57,8 @@ const Navbar = () => {
                                     </a>
                                     <ul className="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown">
                                         <li><Link className="dropdown-item" to="/product" >Products</Link></li>
+                                        <li><Link className="dropdown-item" to="/sell" >Sell</Link></li>
+                                        <li><Link className="dropdown-item" to="/scrap" >Scrap</Link></li>
                                         <li><Link className="dropdown-item" to="/brand" >Brand</Link></li>
                                         <li><Link className="dropdown-item" to="/review" >Review</Link></li>
                                     </ul>
