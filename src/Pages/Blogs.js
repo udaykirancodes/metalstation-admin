@@ -11,17 +11,18 @@ const Blogs = (props) => {
     const navigate = useNavigate(); 
     const [blogs , setblogs ] = useState([]); 
     const [id , setId] = useState(''); 
-    const [input , setinput] = useState({})
+    const [title , setTitle] = useState('')
+    const [description , setDescriptioin] = useState('')
     const [search , setSearch ] = useState(''); 
 
-    useEffect(()=>{
-        let newinput = blogs.filter((element)=>{
-            if(element._id===id){
-                return element
-            }
-        })
-        setinput(newinput); 
-    },[id]);
+    // useEffect(()=>{
+    //     let newinput = blogs.filter((element)=>{
+    //         if(element._id===id){
+    //             return element
+    //         }
+    //     })
+    //     setinput(newinput); 
+    // },[id]);
 
 
     // fetch blogs & show the blogs 
@@ -142,10 +143,7 @@ const Blogs = (props) => {
         })
     }
   
-    // for editing 
-    const handleInput = (e)=>{
-        setinput({...input , [e.target.name] : e.target.value })
-    }
+   
     const EditBlog = ()=>{
         if(!id){
             showAlert("Cannot Delete",'danger'); 
@@ -164,8 +162,8 @@ const Blogs = (props) => {
             },
             body : JSON.stringify({
                 id : id,
-                title:input.title,
-                description:input.description 
+                title:title,
+                description:description 
             })
 
         })
@@ -175,8 +173,8 @@ const Blogs = (props) => {
                 // delete in the frontend
                 let newBlogs = blogs.filter((element)=>{
                     if(element._id === id){
-                        element.title=input.title 
-                        element.description=input.description 
+                        element.title=title 
+                        element.description=description 
                     }
                     return element
                 })
@@ -188,6 +186,12 @@ const Blogs = (props) => {
                 showAlert(data.msg,'danger'); 
             }
         })
+    }
+    const handleEidt = (id)=>{
+        setId(id); 
+        let blog = blogs.filter(element => element._id === id)
+        setTitle(blog[0].title)
+        setDescriptioin(blog[0].description)
     }
     return (
         <>
@@ -206,11 +210,11 @@ const Blogs = (props) => {
                             <form className="row g-3">
                                 <div className="mb-3">
                                     <label htmlFor="exampleFormControlInput1" className="form-label">Title</label>
-                                    <input type="text" name='title' className="form-control" onChange={(e)=>handleInput(e)} value={input.title} id="exampleFormControlInput1" placeholder="Title Of Blog" />
+                                    <input type="text" name='title' className="form-control" onChange={(e)=>setTitle(e.target.value)} value={title || ''} id="exampleFormControlInput1" placeholder="Title Of Blog" />
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="exampleFormControlInput1" className="form-label">Description</label>
-                                    <textarea className="form-control" name='description' value={input.description} onChange={(e)=>handleInput(e)} id="exampleFormControlTextarea1" rows="6" placeholder='Blog Description'></textarea>
+                                    <textarea className="form-control" name='description' onChange={(e)=>setDescriptioin(e.target.value)} value={description || ''} id="exampleFormControlTextarea1" rows="6" placeholder='Blog Description'></textarea>
                                 </div>
                             </form>
                         </div>
@@ -314,7 +318,7 @@ const Blogs = (props) => {
                                         <td>{element.isDeleted ? "Deleted" : "Active"}</td>
                                         <td>
                                             <i className="fa-solid fa-trash mx-2" role='button' onClick={()=>{setId(element._id)}} data-bs-toggle="modal" data-bs-target="#staticBackdrop">D</i> 
-                                            <i className="fa-solid fa-file-pen mx-2" role='button' data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={()=>{ setId(element._id)}}>E</i> 
+                                            <i className="fa-solid fa-file-pen mx-2" role='button' data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={()=>{ handleEidt(element._id)}}>E</i> 
                                             {
                                                 element.isDeleted && 
                                                 <i className="fa-solid fa-file-pen mx-2" role='button' data-bs-toggle="modal" data-bs-target="#modelforundo" onClick={()=>{ setId(element._id)}}>U</i>

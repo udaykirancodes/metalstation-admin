@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { GetAllProducts , ProductDeleteUrl} from '../urls'
+import { GetAllProducts , ProductDeleteUrl , EditProductUrl} from '../urls'
 import './product.css'
 
 const Products = (props) => {
@@ -84,6 +84,42 @@ const Products = (props) => {
         })
         .catch(err=>{
             console.log(err.message); 
+        })
+    }
+
+    // edit product 
+    const EditProduct = ()=>{
+        if(!id){
+            showAlert("Cannot Delete",'danger'); 
+            return ;
+        }
+        // deleting the blog 
+        let adminToken = localStorage.getItem('adminToken'); 
+        if(!adminToken){
+            navigate('/login'); 
+        }
+        fetch(EditProductUrl , {
+            method:"PUT",
+            headers: {
+                'Content-Type':'application/json',
+                'adminToken':adminToken 
+            },
+            body : JSON.stringify({
+                id : id
+            })
+
+        })
+        .then((res)=> res.json())
+        .then((data)=>{
+            if(data.success === true){
+                // delete in the frontend
+                
+                setId(''); 
+                showAlert("Edited Successfully",'success'); 
+            }
+            else{
+                showAlert(data.msg,'danger'); 
+            }
         })
     }
     return (
@@ -176,6 +212,7 @@ const Products = (props) => {
                             <th>#</th>
                             <th>Name</th>
                             <th>Category</th>
+                            <th>SubCategories</th>
                             <th>Description</th>
                             <th>Modal Name</th>
                             <th>Brand</th>
@@ -189,6 +226,7 @@ const Products = (props) => {
                                 <td>{index+1}</td>
                                 <td>{element.name}</td>
                                 <td>{element.category}</td>
+                                <td>{element.subCategory.map((element)=> {return element })}</td>
                                 <td>{element.description}</td>
                                 <td>{element.details.modelname}</td>
                                 <td>{element.details.brand}</td>

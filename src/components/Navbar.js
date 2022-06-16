@@ -7,7 +7,7 @@ const Navbar = () => {
 
     return (
         <div >
-            <nav className="navbar navbar-dark bg-dark fixed-top mb-2">
+            <nav className="navbar navbar-dark bg-dark fixed-top mb-4">
                 <div className="container-fluid text-white">
                     <div className='d-flex cursor-pointer'>
                         <i className="fa-solid fa-user mx-2 my-auto"></i>
