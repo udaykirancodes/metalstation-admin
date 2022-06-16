@@ -1,0 +1,25 @@
+.sell_table{
+    width:90%;
+    
+    border: 1px solid whitesmoke;
+    padding: 10px 10px;
+    margin-right: 10px;
+}
+.sell_head_search{
+    width: 40%;
+    margin-bottom: 20px;
+    margin-left: 100%;
+}
+@media (max-width: 800px) {
+    .sell_head_search{
+        margin-left: 5%;
+        margin-right: 5%;
+        width: 100%;
+    }
+    .sell_table{
+        margin-bottom: 20%;
+    }
+    .sell_head{
+        display: none;
+    }
+}
