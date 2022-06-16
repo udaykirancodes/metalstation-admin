@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
+<<<<<<< HEAD
 import { AllBlgos,UndoDeleteBlogUrl ,  backendurl , EditBlogUrl, DeleteBlogUrl } from '../urls'
+=======
+import { Alert } from '../components/Alert'
+import { AllBlgos, backendurl, EditBlogUrl, DeleteBlogUrl } from '../urls'
+>>>>>>> 725dfe2c4efcbf0322aa1eac97895ee100a1a2d4
 import './blog.css'
 const Blogs = (props) => {
     const { showAlert } = props
     const ref = useRef(null)
     const refClose = useRef(null)
 
+<<<<<<< HEAD
     const navigate = useNavigate(); 
     const [blogs , setblogs ] = useState([]); 
     const [id , setId] = useState(''); 
@@ -23,6 +29,22 @@ const Blogs = (props) => {
     //     })
     //     setinput(newinput); 
     // },[id]);
+=======
+    const navigate = useNavigate();
+    const [blogs, setblogs] = useState([]);
+    const [id, setId] = useState('');
+    const [input, setinput] = useState({})
+    const [search, setSearch] = useState('');
+
+    useEffect(() => {
+        let newinput = blogs.filter((element) => {
+            if (element._id === id) {
+                return element
+            }
+        })
+        setinput(newinput);
+    }, [id]);
+>>>>>>> 725dfe2c4efcbf0322aa1eac97895ee100a1a2d4
 
 
     // fetch blogs & show the blogs 
@@ -52,28 +74,34 @@ const Blogs = (props) => {
     } ,[])
 
     // function to delt a blog 
-    const DeleteBlog = ()=>{
-        if(!id){
-            showAlert("Cannot Delete",'danger');
-            return ;
+    const DeleteBlog = () => {
+        if (!id) {
+            showAlert("Cannot Delete", 'danger');
+            return;
         }
-        
+
         // deleting the blog 
-        let adminToken = localStorage.getItem('adminToken'); 
-        if(!adminToken){
-            navigate('/login'); 
+        let adminToken = localStorage.getItem('adminToken');
+        if (!adminToken) {
+            navigate('/login');
         }
+<<<<<<< HEAD
         fetch(DeleteBlogUrl , {
             method:"PUT",
+=======
+        fetch(DeleteBlogUrl, {
+            method: "DELETE",
+>>>>>>> 725dfe2c4efcbf0322aa1eac97895ee100a1a2d4
             headers: {
-                'Content-Type':'application/json',
-                'adminToken':adminToken 
+                'Content-Type': 'application/json',
+                'adminToken': adminToken
             },
-            body : JSON.stringify({
-                id : id 
+            body: JSON.stringify({
+                id: id
             })
 
         })
+<<<<<<< HEAD
         .then((res)=> res.json())
         .then((data)=>{
             if(data.success === true){
@@ -148,18 +176,48 @@ const Blogs = (props) => {
         if(!id){
             showAlert("Cannot Delete",'danger'); 
             return ;
+=======
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.success === true) {
+                    // delete in the frontend
+                    let newBlogs = blogs.filter((element) => {
+                        if (element._id !== id) {
+                            return element
+                        }
+                    })
+                    setblogs(newBlogs);
+                    setId('');
+                    showAlert("Deleted Successfully", 'success');
+                }
+                else {
+                    showAlert(data.msg, 'danger');
+                }
+            })
+    }
+
+    // for editing 
+    const handleInput = (e) => {
+        setinput({ ...input, [e.target.name]: e.target.value })
+    }
+    const EditBlog = () => {
+        if (!id) {
+            showAlert("Cannot Delete", 'danger');
+            return;
+>>>>>>> 725dfe2c4efcbf0322aa1eac97895ee100a1a2d4
         }
         // deleting the blog 
-        let adminToken = localStorage.getItem('adminToken'); 
-        if(!adminToken){
-            navigate('/login'); 
+        let adminToken = localStorage.getItem('adminToken');
+        if (!adminToken) {
+            navigate('/login');
         }
-        fetch(EditBlogUrl , {
-            method:"PUT",
+        fetch(EditBlogUrl, {
+            method: "PUT",
             headers: {
-                'Content-Type':'application/json',
-                'adminToken':adminToken 
+                'Content-Type': 'application/json',
+                'adminToken': adminToken
             },
+<<<<<<< HEAD
             body : JSON.stringify({
                 id : id,
                 title:title,
@@ -186,6 +244,34 @@ const Blogs = (props) => {
                 showAlert(data.msg,'danger'); 
             }
         })
+=======
+            body: JSON.stringify({
+                id: id,
+                title: input.title,
+                description: input.description
+            })
+
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.success === true) {
+                    // delete in the frontend
+                    let newBlogs = blogs.filter((element) => {
+                        if (element._id === id) {
+                            element.title = input.title
+                            element.description = input.description
+                        }
+                        return element
+                    })
+                    setblogs(newBlogs);
+                    setId('');
+                    showAlert("Edited Successfully", 'success');
+                }
+                else {
+                    showAlert(data.msg, 'danger');
+                }
+            })
+>>>>>>> 725dfe2c4efcbf0322aa1eac97895ee100a1a2d4
     }
     const handleEidt = (id)=>{
         setId(id); 
@@ -210,11 +296,19 @@ const Blogs = (props) => {
                             <form className="row g-3">
                                 <div className="mb-3">
                                     <label htmlFor="exampleFormControlInput1" className="form-label">Title</label>
+<<<<<<< HEAD
                                     <input type="text" name='title' className="form-control" onChange={(e)=>setTitle(e.target.value)} value={title || ''} id="exampleFormControlInput1" placeholder="Title Of Blog" />
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="exampleFormControlInput1" className="form-label">Description</label>
                                     <textarea className="form-control" name='description' onChange={(e)=>setDescriptioin(e.target.value)} value={description || ''} id="exampleFormControlTextarea1" rows="6" placeholder='Blog Description'></textarea>
+=======
+                                    <input type="text" name='title' className="form-control" onChange={(e) => handleInput(e)} value={input.title} id="exampleFormControlInput1" placeholder="Title Of Blog" />
+                                </div>
+                                <div className="mb-3">
+                                    <label htmlFor="exampleFormControlInput1" className="form-label">Description</label>
+                                    <textarea className="form-control" name='description' value={input.description} onChange={(e) => handleInput(e)} id="exampleFormControlTextarea1" rows="6" placeholder='Blog Description'></textarea>
+>>>>>>> 725dfe2c4efcbf0322aa1eac97895ee100a1a2d4
                                 </div>
                             </form>
                         </div>
@@ -225,7 +319,7 @@ const Blogs = (props) => {
                     </div>
                 </div>
             </div>
-            
+
             {/* Blog Delete Model */}
             <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div className="modal-dialog">
@@ -271,7 +365,7 @@ const Blogs = (props) => {
                             <h4>Blog</h4>
                         </div>
                         <div className="blog_head_search col-md-2">
-                            <input type="text" className="form-control" id="price" onChange={(e)=>setSearch(e.target.value)} placeholder='Search By Title' />
+                            <input type="text" className="form-control" id="price" onChange={(e) => setSearch(e.target.value)} placeholder='Search By Title' />
                         </div>
                     </div>
                     <div style={{ marginLeft: '20px', marginRight: '20px' }}>
@@ -286,11 +380,12 @@ const Blogs = (props) => {
                                     <th>Option</th>
                                 </tr>
                                 {
-                                    search ? blogs.map((element,index)=>{
+                                    search ? blogs.map((element, index) => {
                                         // if there is any search filter 
-                                        element.title = element.title.toLowerCase() 
-                                        if(element.title.includes(search.toLocaleLowerCase())){
+                                        element.title = element.title.toLowerCase()
+                                        if (element.title.includes(search.toLocaleLowerCase())) {
                                             return <tr key={index} >
+<<<<<<< HEAD
                                             <td>{index+1}</td>
                                             <td>{element.title}</td>
                                             <td className='description'>{element.description}</td>
@@ -326,8 +421,30 @@ const Blogs = (props) => {
                                         </td>
                                         </tr>
                                     })
+=======
+                                                <td>{index + 1}</td>
+                                                <td>{element.title}</td>
+                                                <td className='description'>{element.description}</td>
+                                                <td className='image'> <img style={{ height: '80px', width: '150px', borderRadius: '10px' }} src={backendurl + element.img} alt="Blog Image" ></img> </td>
+                                                <td><i className="fa-solid fa-trash mx-2" role='button' onClick={() => { setId(element._id) }} data-bs-toggle="modal" data-bs-target="#staticBackdrop">D</i> <i className="fa-solid fa-file-pen mx-2" role='button' data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId(element._id) }}>E</i></td>
+                                            </tr>
+                                        }
+                                    })
+                                        :
+                                        // for no search filter 
+                                        blogs.map((element, index) => {
+                                            return <tr key={index} >
+                                                <td>{index + 1}</td>
+                                                <td>{element.title}</td>
+                                                <td className='description'>{element.description}</td>
+                                                <td className='image'> <img style={{ height: '80px', width: '150px', borderRadius: '10px' }} src={backendurl + element.img} alt="Blog Image" ></img> </td>
+                                                <td><i className="fa-solid fa-trash mx-2" role='button' onClick={() => { setId(element._id) }} data-bs-toggle="modal" data-bs-target="#staticBackdrop"></i> <i className="fa-solid fa-file-pen mx-2" role='button' data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId(element._id) }}>E</i></td>
+                                            </tr>
+
+                                        })
+>>>>>>> 725dfe2c4efcbf0322aa1eac97895ee100a1a2d4
                                 }
-                               
+
                             </table>
                         </div>
                     </div>

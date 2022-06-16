@@ -5,6 +5,9 @@
 .product{
     margin-top: 3%;
 }
+.product_search{
+    margin-left: 76%;
+}
 .newBtn{
     float: right;
     margin-right: 20px;

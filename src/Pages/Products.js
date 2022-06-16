@@ -144,7 +144,8 @@ const Products = (props) => {
                                     <input type="text" class="form-control" id="name" />
                                 </div>
                                 
-                                <div class="col-md-2">
+                                
+                                <div class="col-md-6">
                                     <label for="subCategory" class="form-label">SubCategory</label>
                                     <select id="subCategory" class="form-select">
                                         <option value=" ">Choose...</option>
@@ -185,7 +186,7 @@ const Products = (props) => {
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Deleting Product</h5>
+                            <h5 class="modal-title" id="staticBackdropLabel">Removing Product</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -194,16 +195,25 @@ const Products = (props) => {
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="button" class="btn btn-primary" onClick={DeleteProduct} data-bs-dismiss="modal">Delete Product</button>
+                            Product will move to TRASH PRODUCT...
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" onClick={handleDelete} data-bs-dismiss="modal">Remove Product</button>
                         </div>
                     </div>
                 </div>
             </div>
             <div className="product">
+
                 <Link to="/newProduct">
                     <button type="button" className="btn btn-primary newBtn">Add New Product</button>
                 </Link>
                 <div className="product_head">
                     <h4 style={{ marginLeft: '20px' }}>All Product</h4>
+                    <div className="product_search">
+                        <input type="text" className="form-control" id="price" placeholder='Search By Name' />
+                    </div>
                 </div>
                 <hr />
                 <div className="product_info">
@@ -211,6 +221,7 @@ const Products = (props) => {
                         <tr>
                             <th>#</th>
                             <th>Name</th>
+                            <th>Description</th>
                             <th>Category</th>
                             <th>SubCategories</th>
                             <th>Description</th>
@@ -240,6 +251,23 @@ const Products = (props) => {
                             })
                         }
                         
+                            <th>Quantity</th>
+                            <th>Status</th>
+                            <th>Update Product</th>
+                        </tr>
+                        <tr>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td><i class="fa-solid fa-square-minus mx-2" role='button' data-bs-toggle="modal" data-bs-target="#staticBackdrop"></i><i class="fa-solid fa-file-pen mx-2" role='button' onClick={handleEdit}></i> </td>
+                        </tr>
                     </table>
                 </div>
             </div>
