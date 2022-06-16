@@ -204,7 +204,6 @@ const Newproduct = (props) => {
                             options={input.category === "automobile" ? options.automobile : options.metal } id="category" className="form-select">
                         </Select>
                     </div>
-<<<<<<< HEAD
                     
                     <div className="col-md-6">
                         <label htmlFor="modelName" className="form-label">Model Name</label>
@@ -217,16 +216,6 @@ const Newproduct = (props) => {
                     <div className="mb-3">
                         <label htmlFor="formFileMultiple" className="form-label">Product Image</label>
                         <input className="form-control"  type="file" id="formFileMultiple" onChange={(e)=>{setSelectedImages(e.target.files)}} multiple accept=".jpeg,.jpg,.png" />
-=======
-                    <div class="col-md-4">
-                        <label for="price" class="form-label">Quantity</label>
-                        <input type="text" class="form-control" id="price" />
-                    </div>
-
-                    <div class="col-md-8">
-                        <label for="formFileMultiple" class="form-label">Product Image</label>
-                        <input class="form-control" type="file" id="formFileMultiple" multiple accept=".jpeg,.jpg,.png" />
->>>>>>> 725dfe2c4efcbf0322aa1eac97895ee100a1a2d4
                     </div>
                     <button style={{width:"60px", marginBottom:"10%"}} type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                         Add
