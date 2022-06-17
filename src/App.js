@@ -20,20 +20,11 @@ import { Alert } from './components/Alert';
 import Signin from './Pages/Signin';
 import Blogs from './Pages/Blogs';
 import AddBlog from './Pages/AddBlog';
-import Trashproduct from './Pages/Trashproduct';
-import Trashblog from './Pages/Trashblog';
-import Sell from './Pages/Sell';
-import Scrap from './Pages/Scrap';
-import Enquiry from './Pages/Enquiry';
 
 function App() {
   const [alert, setAlert] = useState(null);
 
   const showAlert = (message, type) => {
-<<<<<<< HEAD
-=======
-
->>>>>>> 725dfe2c4efcbf0322aa1eac97895ee100a1a2d4
     setAlert({
       msg: message,
       type: type
@@ -48,30 +39,25 @@ function App() {
     <>
       <GlobalState>
 
-        <Router>
-          <Navbar />
-          <Alert alert={alert} />
-          <Routes>
-            <Route exact path='/' element={<Home />} />
-            <Route exact path='/product' element={<Products showAlert={showAlert} />} />
-            <Route exact path='/enquiry' element={<Enquiry showAlert={showAlert} />} />
-            <Route exact path='/newProduct' element={<Newproduct showAlert={showAlert} />} />
-            <Route exact path='/trashproduct' element={<Trashproduct showAlert={showAlert} />} />
-            <Route exact path='/sell' element={<Sell showAlert={showAlert} />} />
-            <Route exact path='/scrap' element={<Scrap showAlert={showAlert} />} />
-            <Route exact path='/order' element={<Order />} />
-            <Route exact path='/newsletter' element={<Newsletter showAlert={showAlert} />} />
-            <Route exact path='/review' element={<Review />} />
-            <Route exact path='/customer' element={<Customer />} />
-            <Route exact path='/subscriber' element={<Subscriber />} />
-            <Route exact path='/brand' element={<Brand showAlert={showAlert} />} />
-            <Route exact path='/login' element={<Signin showAlert={showAlert} />} />
-            <Route exact path='/blog' element={<Blogs showAlert={showAlert} />} />
-            <Route exact path='/trashblog' element={<Trashblog showAlert={showAlert} />} />
-            <Route exact path='/addblog' element={<AddBlog showAlert={showAlert} />} />
-          </Routes>
+          <Router>
+            <Navbar />
+            <Alert alert={alert}/>
+            <Routes>
+              <Route exact path='/' element={<Home/>}/>
+              <Route exact path='/product' element={<Products showAlert={showAlert}/>}/>
+              <Route exact path='/newProduct' element={<Newproduct showAlert={showAlert} />}/>
+              <Route exact path='/order' element={<Order/>}/>
+              <Route exact path='/newsletter' element={<Newsletter showAlert={showAlert}/>}/>
+              <Route exact path='/review' element={<Review/>}/>
+              <Route exact path='/customer' element={<Customer/>}/>
+              <Route exact path='/subscriber' element={<Subscriber/>}/>
+              <Route exact path='/brand' element={<Brand showAlert={showAlert}/>}/>
+              <Route exact path='/login' element={<Signin showAlert={showAlert}/>}/>
+              <Route exact path='/blog' element={<Blogs showAlert={showAlert}/>}/>
+              <Route exact path='/addblog' element={<AddBlog showAlert={showAlert}/>}/>
+            </Routes>
 
-        </Router>
+          </Router>
       </GlobalState>
 
     </>
