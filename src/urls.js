@@ -13,3 +13,4 @@ export const GetAllProducts = backendurl+'products/find/all';
 export const ProductDeleteUrl = backendurl+'products/delete';
 export const AddProductUrl = backendurl+'products/add';
 export const EditProductUrl = backendurl+'products/edit';
+export const UndoDeleteProductUrl = backendurl+'products/undo';

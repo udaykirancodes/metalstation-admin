@@ -93,6 +93,7 @@ const Newproduct = (props) => {
             form.append('brand',input.brand);
             form.append('metalType',input.type);
             form.append('price',input.price);
+            form.append('modelname',input.modelname);
             form.append('subCategory',subcategories);
         }
         // appending images 
@@ -117,6 +118,8 @@ const Newproduct = (props) => {
         .then((data)=>{
             if(data.success === true){
                 console.log(data); 
+                setInput({}); 
+                navigate('/product'); 
                 showAlert("Product Added Successfully ","success"); 
             }
             else{
@@ -127,7 +130,7 @@ const Newproduct = (props) => {
     return (
         <>
             {/* <!-- Modal --> */}
-            <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div className="modal fade" id="staticBackdrop"  data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -144,7 +147,7 @@ const Newproduct = (props) => {
                     </div>
                 </div>
             </div>
-            <div className="newProduct container"  style={{margin:'100px'}}>
+            <div className="newProduct container"  style={{paddingTop:'5%'}}>
                 <form className="row g-3">
                     <div className="col-md-6">
                         <label htmlFor="name" className="form-label">Name of the Product</label>
@@ -207,7 +210,7 @@ const Newproduct = (props) => {
                     
                     <div className="col-md-6">
                         <label htmlFor="modelName" className="form-label">Model Name</label>
-                        <input type="text" className="form-control"  name='modelname' onChange={(e)=>{handleInput(e)}} id="modelName" />
+                        <input type="text" className="form-control"  name='modelname'  onChange={(e)=>{handleInput(e)}} id="modelName" />
                     </div>
                     <div className="col-md-2">
                         <label htmlFor="price" className="form-label">Price</label>
