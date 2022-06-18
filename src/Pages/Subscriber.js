@@ -55,15 +55,19 @@ const Subscriber = () => {
         })
     },[])
 
+    const [search , setSearch] = useState(''); 
      return (
         <>
+        {/* <div style={{height:'60px'}}></div> */}
             {
                alert.state && <Alert alert={alert} />
             }
-            
-            <div className="subscriber d-flex" style={{  marginBottom: '20px' }}>
-                <div className="subscriber_head head" style={{ marginRight: '44%', marginLeft: '20px' }}>
+            <div className="customer d-flex"style={{margin:'60px 0 0 0'}}>
+                <div className="customer_head head">
                     <h4>All Subscribers</h4>
+                </div>
+                <div className="customer_head col-md-2">
+                    <input type="text" onChange={(e)=>setSearch(e.target.value)} value={search} className="form-control" id="price" placeholder='Type Name or Email' />
                 </div>
             </div>
             
@@ -76,9 +80,26 @@ const Subscriber = () => {
                             <th>Name</th>
                         </tr>
                         {
+                            search ? 
+                            // with search filter
+                            subscribers.map((element,index)=>{
+                                let s = search.toLocaleLowerCase();
+                                if(element.email.includes(s) || element.name.includes(s)) {
+                                    if(element.subscribed){
+                                        return <tr key={index}>
+                                                <td>{index+1}</td>
+                                                <td>{element.name}</td>
+                                                <td>{element.email}</td>
+                                            </tr>
+                                    }
+                                }
+                            })
+
+                            :
+                            // with no search filter 
                             subscribers.map((element,index)=>{
                                 if(element.subscribed){
-                                    return <tr>
+                                    return <tr key={index}>
                                             <td>{index+1}</td>
                                             <td>{element.name}</td>
                                             <td>{element.email}</td>

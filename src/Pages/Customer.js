@@ -55,19 +55,21 @@ const Customer = () => {
             }
         })
     } ,[])
+    const [search , setSearch] = useState(''); 
     return (
         <>
+            <div style={{height:'60px'}}></div>
                 
-            <div className="customer d-flex" style={{ marginBottom: '20px' }}>
+            { alert.state &&  <Alert alert={alert} />}
+            <div className="customer d-flex"style={{margin:'10px 0'}}>
                 <div className="customer_head head">
                     <h4>Customers</h4>
                 </div>
                 <div className="customer_head col-md-2">
-                    <input type="text" className="form-control" id="price" placeholder='Type email or name' />
+                    <input type="text" onChange={(e)=>setSearch(e.target.value)} value={search} className="form-control" id="price" placeholder='Type Name or Email' />
                 </div>
             </div>
-            <div style={{ marginLeft: '20px', marginRight: '20px' }}>
-            { alert.state &&  <Alert alert={alert} />}
+            <div style={{ marginLeft: '20px',paddingBottom:'10%', marginRight: '20px' }}>
                 <div className="customer_info">
                     <table>
                         <tbody>
@@ -80,6 +82,23 @@ const Customer = () => {
                         </tr>
 
                         {
+                            search ?
+
+                            customers.map((element,index)=>{
+                                // if there is any search filter 
+                                let s = search.toLocaleLowerCase();
+                                if(element.email.includes(s) || element.name.includes(s)){
+                                    return <tr key={index}>
+                                    <td>{index+1}</td>
+                                    <td>{element.name}</td>
+                                    <td>{element.email}</td>
+                                    <td>{element.phone}</td>
+                                    <td>{element.subscribed ? 'Yes' : 'No'}</td>
+                                </tr>
+                                }
+                            })
+
+                            :
                             customers.map((element,index)=>{
                                 return <tr key={index}>
                                 <td>{index+1}</td>

@@ -44,6 +44,7 @@ const AddBlog = (props) => {
         .then((data)=>{
             console.log(data); 
             if(data.success === true){
+                setblog(null); 
                 showAlert("Blog Added Successfully ","success"); 
             }
             else{
@@ -56,7 +57,9 @@ const AddBlog = (props) => {
     
 
     return (
-        <div>
+
+        <div >
+            <div style={{height:'60px'}}></div>
             <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
