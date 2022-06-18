@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { GetAllProducts , ProductDeleteUrl , EditProductUrl} from '../urls'
+import { GetAllProducts , ProductDeleteUrl ,UndoDeleteProductUrl, EditProductUrl} from '../urls'
 import './product.css'
 
 const Products = (props) => {
@@ -87,6 +87,24 @@ const Products = (props) => {
         })
     }
 
+    // handling edit 
+    const [input , setInput] = useState({}); 
+    const handleChange = (e)=>{
+        setInput({...input , [e.target.name]:e.target.value}); 
+    }
+    const handleEdit = (id)=>{
+        console.log('Handle Edit');
+        let product = products.filter(element => element._id === id); 
+        setInput({
+            modelname:product[0].details.modelname,
+            description:product[0].description,
+            name:product[0].name ,
+            price:product[0].price,
+            category:product[0].category
+        })
+        setId(id); 
+    }
+
     // edit product 
     const EditProduct = ()=>{
         if(!id){
@@ -94,10 +112,13 @@ const Products = (props) => {
             return ;
         }
         // deleting the blog 
-        let adminToken = localStorage.getItem('adminToken'); 
+        let adminToken = localStorage.getItem('adminToken');
+        console.log(adminToken) ; 
         if(!adminToken){
             navigate('/login'); 
         }
+
+        console.log("edit 1"); 
         fetch(EditProductUrl , {
             method:"PUT",
             headers: {
@@ -105,15 +126,55 @@ const Products = (props) => {
                 'adminToken':adminToken 
             },
             body : JSON.stringify({
-                id : id
+                id : id,
+                name:input.name,
+                description:input.description,
+                modelname:input.modelname,
+                price:input.price ,
+                category:input.category
             })
-
+            
         })
         .then((res)=> res.json())
         .then((data)=>{
             if(data.success === true){
-                // delete in the frontend
-                
+                // edit in the frontend
+                let newProducts = products.filter((element)=>{
+                    if(element._id === id){
+                        let {product} = data ; 
+                        console.log(product); 
+                        if(product.category === 'automobile'){
+                            element.name=product.name 
+                            element.category=product.category
+                            element.description=product.description
+                            element.subCategory=product.subCategory 
+                            element.details={
+                                brand:product.details.brand,
+                                modelname:product.details.modelname,
+                                fuelType:product.details.fuelType
+                            }
+                            element.price= product.price
+                            element.img = product.img 
+                        }
+                        else{
+                            element.name=product.name 
+                            element.category=product.category
+                            element.description=product.description
+                            element.subCategory=product.subCategory 
+                            element.details={
+                                brand: product.details.brand,
+                                modelname:product.details.modelname,
+                                metalType:product.details.metalType,     
+                            }
+                            element.price= product.price
+                            element.img = product.img 
+                        }
+                        console.log('After Edited : ',element); 
+                        return element 
+                    }
+                    return element
+                })
+                setProducts(newProducts)
                 setId(''); 
                 showAlert("Edited Successfully",'success'); 
             }
@@ -122,6 +183,55 @@ const Products = (props) => {
             }
         })
     }
+    
+
+    const UndoDelete = ()=>{
+        if(!id){
+            showAlert("Cannot Delete",'danger');
+            return ;
+        }
+        
+        // deleting the blog 
+        let adminToken = localStorage.getItem('adminToken'); 
+        if(!adminToken){
+            navigate('/login'); 
+        }
+        fetch(UndoDeleteProductUrl , {
+            method:"PUT",
+            headers: {
+                'Content-Type':'application/json',
+                'adminToken':adminToken 
+            },
+            body : JSON.stringify({
+                id : id 
+            })
+
+        })
+        .then((res)=> res.json())
+        .then((data)=>{
+            if(data.success === true){
+                // undo delete in the frontend
+                let newProducts = products.filter((element)=>{
+                    if(element._id !== id){
+                        return element  
+                    }
+                    else{
+                        element.isDeleted = false ; 
+                        return element 
+                    }
+                })
+                setProducts(newProducts); 
+                setId(''); 
+                showAlert("Undo Delete Successfully",'success'); 
+            }
+            else{
+                showAlert(data.msg,'danger'); 
+            }
+        })
+    }
+
+    // search state
+    const [search , setSearch] = useState('');
     return (
 
         <>
@@ -174,7 +284,7 @@ const Products = (props) => {
                         </div>
                         <div className="modal-footer">
                             <button ref={refClose} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary" >Update Product</button>
+                            <button type="button" onClick={EditProduct} className="btn btn-primary" data-bs-dismiss="modal">Update Product</button>
                         </div>
                     </div>
                 </div>
@@ -196,6 +306,15 @@ const Products = (props) => {
                             <button type="button" className="btn btn-primary" onClick={DeleteProduct} data-bs-dismiss="modal">Delete Product</button>
                         </div>
                     </div>
+                </div>
+            </div>
+            {/* <div style={{height:'60px'}}></div> */}
+            <div className="customer d-flex"style={{margin:'60px 0 0 0'}}>
+                <div className="customer_head head">
+                    <h4>Products</h4>
+                </div>
+                <div className="customer_head col-md-2">
+                    <input type="text" onChange={(e)=>setSearch(e.target.value)} value={search} className="form-control" id="price" placeholder='Seach With Product Name or Description' />
                 </div>
             </div>
             <div className="product">
@@ -221,6 +340,34 @@ const Products = (props) => {
                             <th>Upadte Product</th>
                         </tr>
                         {
+                            // search filter 
+                            search ? 
+                            // with search filter 
+                            products.map((element,index)=>{
+                                let s = search.toLocaleLowerCase();
+                                if(element.name.includes(s) || element.description.includes(s)){
+                                return <tr key={index}>
+                                    <td>{index+1}</td>
+                                    <td>{element.name}</td>
+                                    <td>{element.category}</td>
+                                    <td>{element.subCategory.map((element)=> {return element })}</td>
+                                    <td>{element.description}</td>
+                                    <td>{element.details.modelname || ''}</td>
+                                    <td>{element.details.brand}</td>
+                                    <td>{element.price}</td>
+                                    <td>{element.isDeleted ? "Out of Stock" : "In Stock"}</td>
+                                    <td>
+                                        <i className="fa-solid fa-trash mx-2" role='button' data-bs-toggle="modal" data-bs-target="#staticBackdrop" onClick={()=>setId(element._id)}>D</i> 
+                                        <i className="fa-solid fa-file-pen mx-2" role='button' data-bs-toggle="modal" data-bs-target="#modelforedit" onClick={()=>handleEdit(element._id)}>E</i> 
+                                        {
+                                            element.isDeleted && 
+                                            <i className="fa-solid fa-file-pen mx-2" role='button' data-bs-toggle="modal" data-bs-target="#modelforundo" onClick={()=>setId(element._id)}>U</i> 
+                                        }
+                                    </td>
+                                </tr>
+                                }
+                            })
+                            : // without any search filter 
                             products.map((element,index)=>{
                                 return <tr key={index}>
                                 <td>{index+1}</td>
@@ -228,7 +375,7 @@ const Products = (props) => {
                                 <td>{element.category}</td>
                                 <td>{element.subCategory.map((element)=> {return element })}</td>
                                 <td>{element.description}</td>
-                                <td>{element.details.modelname}</td>
+                                <td>{element.details.modelname || ''}</td>
                                 <td>{element.details.brand}</td>
                                 <td>{element.price}</td>
                                 <td>{element.isDeleted ? "Out of Stock" : "In Stock"}</td>

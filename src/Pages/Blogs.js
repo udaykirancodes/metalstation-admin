@@ -259,6 +259,7 @@ const Blogs = (props) => {
             </div>
 
             {/* Blogs Display  */}
+            <div style={{height:'60px'}}></div>
             <div className="blog">
                 <div className="blog_table mx-auto">
                     <div className="col-md-10 d-flex">
