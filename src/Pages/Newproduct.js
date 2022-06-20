@@ -207,7 +207,6 @@ const Newproduct = (props) => {
                             options={input.category === "automobile" ? options.automobile : options.metal } id="category" className="form-select">
                         </Select>
                     </div>
-                    
                     <div className="col-md-6">
                         <label htmlFor="modelName" className="form-label">Model Name</label>
                         <input type="text" className="form-control"  name='modelname'  onChange={(e)=>{handleInput(e)}} id="modelName" />
@@ -220,6 +219,7 @@ const Newproduct = (props) => {
                         <label htmlFor="formFileMultiple" className="form-label">Product Image</label>
                         <input className="form-control"  type="file" id="formFileMultiple" onChange={(e)=>{setSelectedImages(e.target.files)}} multiple accept=".jpeg,.jpg,.png" />
                     </div>
+                    
                     <button style={{width:"60px", marginBottom:"10%"}} type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                         Add
                     </button>

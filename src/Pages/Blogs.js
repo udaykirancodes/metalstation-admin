@@ -15,15 +15,7 @@ const Blogs = (props) => {
     const [description , setDescriptioin] = useState('')
     const [search , setSearch ] = useState(''); 
 
-    // useEffect(()=>{
-    //     let newinput = blogs.filter((element)=>{
-    //         if(element._id===id){
-    //             return element
-    //         }
-    //     })
-    //     setinput(newinput); 
-    // },[id]);
-
+   
 
     // fetch blogs & show the blogs 
     useEffect(()=>{
@@ -143,22 +135,24 @@ const Blogs = (props) => {
         })
     }
   
-   
-    const EditBlog = ()=>{
-        if(!id){
-            showAlert("Cannot Delete",'danger'); 
-            return ;
+
+    // for editing 
+
+    const EditBlog = () => {
+        if (!id) {
+            showAlert("Cannot Delete", 'danger');
+            return;
         }
         // deleting the blog 
-        let adminToken = localStorage.getItem('adminToken'); 
-        if(!adminToken){
-            navigate('/login'); 
+        let adminToken = localStorage.getItem('adminToken');
+        if (!adminToken) {
+            navigate('/login');
         }
-        fetch(EditBlogUrl , {
-            method:"PUT",
+        fetch(EditBlogUrl, {
+            method: "PUT",
             headers: {
-                'Content-Type':'application/json',
-                'adminToken':adminToken 
+                'Content-Type': 'application/json',
+                'adminToken': adminToken
             },
             body : JSON.stringify({
                 id : id,
@@ -212,6 +206,7 @@ const Blogs = (props) => {
                                     <label htmlFor="exampleFormControlInput1" className="form-label">Title</label>
                                     <input type="text" name='title' className="form-control" onChange={(e)=>setTitle(e.target.value)} value={title || ''} id="exampleFormControlInput1" placeholder="Title Of Blog" />
                                 </div>
+
                                 <div className="mb-3">
                                     <label htmlFor="exampleFormControlInput1" className="form-label">Description</label>
                                     <textarea className="form-control" name='description' onChange={(e)=>setDescriptioin(e.target.value)} value={description || ''} id="exampleFormControlTextarea1" rows="6" placeholder='Blog Description'></textarea>
@@ -289,8 +284,8 @@ const Blogs = (props) => {
                                 {
                                     search ? blogs.map((element,index)=>{
                                         // if there is any search filter 
-                                        element.title = element.title.toLowerCase() 
-                                        if(element.title.includes(search.toLocaleLowerCase())){
+                                        element.title = element.title.toLowerCase()
+                                        if (element.title.includes(search.toLocaleLowerCase())) {
                                             return <tr key={index} >
                                             <td>{index+1}</td>
                                             <td>{element.title}</td>
@@ -310,8 +305,9 @@ const Blogs = (props) => {
                                     })
                                     :
                                     // for no search filter 
-                                    blogs.map((element , index)=>{
-                                        return <tr key={index} >
+
+                                        blogs.map((element , index)=>{
+                                            return <tr key={index} >
                                         <td>{index+1}</td>
                                         <td>{element.title}</td>
                                         <td className='description'>{element.description}</td>
@@ -326,9 +322,9 @@ const Blogs = (props) => {
                                             }
                                         </td>
                                         </tr>
-                                    })
+                                        }
+                                    )
                                 }
-                               
                             </table>
                         </div>
                     </div>

@@ -17,12 +17,13 @@ const Signin = () => {
     }); 
 
     const handleInput = (e)=>{
-        console.log(input); 
         setInput({...input , [e.target.name ] : e.target.value})
     }
 
     const handleSubmit = (e)=> {
         e.preventDefault(); 
+        console.log(input); 
+        // return ; 
         fetch(AdminLogin , {
             method:"POST",
             headers: {
@@ -54,7 +55,9 @@ const Signin = () => {
     return (
         <>
         
+        <div style={{height:'80px'}}></div>
         <div className='signin mx-auto my-auto' >
+
             <div className='my-5'>{
                     alert.state &&  <Alert alert={alert}  />
                 }

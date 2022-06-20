@@ -38,25 +38,25 @@ const Home = () => {
                 </div>
                 <div className="home_content" >
                     <div className="home_inside">
-                        <h7>Total Products</h7>
+                        <h6>Total Products</h6>
                         <h2>0</h2>
                     </div>
                 </div>
                 <div className="home_content" >
                     <div className="home_inside">
-                        <h7>Total Order</h7>
+                        <h6>Total Order</h6>
                         <h2>0</h2>
                     </div>
                 </div>
                 <div className="home_content" >
                     <div className="home_inside">
-                        <h7>Total Sales</h7>
+                        <h6>Total Sales</h6>
                         <h2>Rs:0.0</h2>
                     </div>
                 </div>
                 <div className="home_content" >
                     <div className="home_inside">
-                        <h7>Order Stats</h7>
+                        <h6>Order Stats</h6>
                     </div>
                 </div>
             </div>

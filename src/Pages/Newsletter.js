@@ -6,15 +6,8 @@ import { AllUsers, SendEmailUrl } from '../urls';
 import './newsletter.css'
 
 const Newsletter = (props) => {
-    const navigate = useNavigate(); 
-    const [users , setusers] = useState([]); 
-    const [alert , setAlert ] = useState({
-        type : 'danger' , 
-        msg : '',
-        state : false  
-    }); 
     const { showAlert } = props;
-
+    const navigate = useNavigate(); 
     const [input , setInput]  = useState({
         subject:'',
         text:''
@@ -23,52 +16,6 @@ const Newsletter = (props) => {
     const [subscribers , setSubscribers] = useState([]);
 
     const [options , setOptions ] = useState([]);
-
-    useEffect(()=>{
-        let adminToken = localStorage.getItem('adminToken'); 
-        if(!adminToken){
-            navigate('/login'); 
-        }
-        fetch(AllUsers , {
-            method:"GET",
-            headers: {
-                'Content-Type':'application/json',
-                'adminToken':adminToken 
-            }
-        })
-        .then((res)=> res.json())
-        .then((data)=>{
-            if(data.success === true){
-                // set users  
-                setusers(data.users); 
-                let currentUsers = data.users.map((user,index)=> {
-                    if(user.emailVerified){
-                        return user.email 
-                    }
-                }); 
-                // set options 
-                let options = data.users.map((user)=>{
-                    let obj = {value:user.email,label:user.email}
-                    return obj; 
-                })
-                console.log(options); 
-                setOptions(options)
-                setSubscribers(currentUsers);
-            }
-            else{
-                setAlert({
-                    type:'danger',
-                    msg : data.msg , 
-                    state:true 
-                })
-                setTimeout(() => {
-                    setAlert({
-                        state:false 
-                    })
-                }, 5000);
-            }
-        })
-    },[])
     
 
    const handleChange = (e)=>{
@@ -109,7 +56,7 @@ const Newsletter = (props) => {
             }
             else {
                 console.log(data.msg); 
-                setAlert(data.msg, 'danger')
+                showAlert(data.msg, 'danger')
             }
         })
     };

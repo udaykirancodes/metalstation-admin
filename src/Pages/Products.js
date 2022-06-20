@@ -250,20 +250,35 @@ const Products = (props) => {
                         <div className="modal-body">
                             <form className="row g-3">
                                 <div className="col-md-6">
-                                    <label htmlFor="name" className="form-label">Name of the Product</label>
-                                    <input type="text" name='name' onChange={(e)=>handleChange(e)} value={input.name || ''} className="form-control" id="name" />
+                                    <label for="name" className="form-label">Name of the Product</label>
+                                    <input type="text" className="form-control" id="name" />
+                                </div>
+                                
+                                <div className="col-md-2">
+                                    <label for="subCategory" className="form-label">SubCategory</label>
+                                    <select id="subCategory" className="form-select">
+                                        <option value=" ">Choose...</option>
+                                        <option value="car">Car</option>
+                                        <option value="bike">Bike</option>
+                                        <option value="jsv">JSV</option>
+                                    </select>
+
                                 </div>
                                 <div className="col-md-6">
-                                    <label htmlFor="name" className="form-label">Description of the Product</label>
-                                    <input type="text" name='description' onChange={(e)=>handleChange(e)} value={input.description || ''} className="form-control" id="name" />
+                                    <label for="modelName" className="form-label">Model Name</label>
+                                    <input type="text" className="form-control" id="modelName" />
                                 </div>
-                                <div className="col-md-6">
-                                    <label htmlFor="modelName" className="form-label">Model Name</label>
-                                    <input type="text" name='modelname' onChange={(e)=>handleChange(e)} value={input.modelname || ''} className="form-control" id="modelName" />
+                                <div className="col-md-4">
+                                    <label for="brand" className="form-label">Brand</label>
+                                    <select id="brand" className="form-select">
+                                        <option selected>Choose...</option>
+                                        <option>Suzuki</option>
+                                        <option>Hundai</option>
+                                    </select>
                                 </div>
                                 <div className="col-md-2">
-                                    <label htmlFor="price" className="form-label">Price</label>
-                                    <input type="text" name='price' onChange={(e)=>handleChange(e)} value={input.price || ''} className="form-control" id="price" />
+                                    <label for="price" className="form-label">Price</label>
+                                    <input type="text" className="form-control" id="price" />
                                 </div>
                             </form>
                         </div>
@@ -289,24 +304,6 @@ const Products = (props) => {
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="button" className="btn btn-primary" onClick={DeleteProduct} data-bs-dismiss="modal">Delete Product</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {/* <!-- Modal for Undo Delete--> */}
-            <div className="modal fade" id="modelforundo" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="staticBackdropLabel">Undo Delete Product</h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div className="modal-body">
-                            Are you sure ? Retrive the Product !!!
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary" onClick={UndoDelete} data-bs-dismiss="modal">Undo Delete</button>
                         </div>
                     </div>
                 </div>
@@ -384,16 +381,11 @@ const Products = (props) => {
                                 <td>{element.isDeleted ? "Out of Stock" : "In Stock"}</td>
                                 <td>
                                     <i className="fa-solid fa-trash mx-2" role='button' data-bs-toggle="modal" data-bs-target="#staticBackdrop" onClick={()=>setId(element._id)}>D</i> 
-                                    <i className="fa-solid fa-file-pen mx-2" role='button' data-bs-toggle="modal" data-bs-target="#modelforedit" onClick={()=>handleEdit(element._id)}>E</i> 
-                                    {
-                                        element.isDeleted && 
-                                        <i className="fa-solid fa-file-pen mx-2" role='button' data-bs-toggle="modal" data-bs-target="#modelforundo" onClick={()=>setId(element._id)}>U</i> 
-                                    }
+                                    <i className="fa-solid fa-file-pen mx-2" role='button' data-bs-toggle="modal" data-bs-target="#modelforedit" onClick={()=>setId(element._id)}>E</i> 
                                 </td>
                             </tr>
                             })
                         }
-                        
                     </table>
                 </div>
             </div>
