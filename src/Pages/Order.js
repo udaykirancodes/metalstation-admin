@@ -1,6 +1,4 @@
-import React from 'react'
 import './order.css'
-
 const Order = () => {
     return (
         <>
@@ -29,9 +27,9 @@ const Order = () => {
                 </div>
             </div>
             <div style={{marginLeft:'20px', marginRight:'20px'}}>
-                <div className="order_info">
-                    <table>
-                        <tr>
+                <div className="order_info" id="first">
+                    <table  >
+                        <tr className='first'>
                             <th>#</th>
                             <th>Order Code</th>
                             <th>Num of product</th>
@@ -41,16 +39,222 @@ const Order = () => {
                             <th>Payment Status</th>
                         </tr>
                         <tr>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
+                            <td>g</td>
+                            <td>ggg</td>
+                            <td>ghsd</td>
+                            <td>tetg</td>
+                            <td>tetge</td>
+                            <td>gge</td>
+                            <td>gege</td>
                         </tr>
-                    </table>
+                        <tr>
+                            <td>g</td>
+                            <td>ggg</td>
+                            <td>ghsd</td>
+                            <td>tetg</td>
+                            <td>tetge</td>
+                            <td>gge</td>
+                            <td>gege</td>
+                        </tr>
+                        <tr>
+                            <td>g</td>
+                            <td>ggg</td>
+                            <td>ghsd</td>
+                            <td>tetg</td>
+                            <td>tetge</td>
+                            <td>gge</td>
+                            <td>gege</td>
+                        </tr>
+                        <tr>
+                            <td>g</td>
+                            <td>ggg</td>
+                            <td>ghsd</td>
+                            <td>tetg</td>
+                            <td>tetge</td>
+                            <td>gge</td>
+                            <td>gege</td>
+                        </tr>
+
+                        <tr>
+                            <td>g</td>
+                            <td>ggg</td>
+                            <td>ghsd</td>
+                            <td>tetg</td>
+                            <td>tetge</td>
+                            <td>gge</td>
+                            <td>gege</td>
+                        </tr>
+                        <tr>
+                            <td>g</td>
+                            <td>ggg</td>
+                            <td>ghsd</td>
+                            <td>tetg</td>
+                            <td>tetge</td>
+                            <td>gge</td>
+                            <td>gege</td>
+                        </tr>
+                        <tr>
+                            <td>g</td>
+                            <td>ggg</td>
+                            <td>ghsd</td>
+                            <td>tetg</td>
+                            <td>tetge</td>
+                            <td>gge</td>
+                            <td>gege</td>
+                        </tr>
+                        <tr>
+                            <td>g</td>
+                            <td>ggg</td>
+                            <td>ghsd</td>
+                            <td>tetg</td>
+                            <td>tetge</td>
+                            <td>gge</td>
+                            <td>gege</td>
+                        </tr>
+                        <tr>
+                            <td>g</td>
+                            <td>ggg</td>
+                            <td>ghsd</td>
+                            <td>tetg</td>
+                            <td>tetge</td>
+                            <td>gge</td>
+                            <td>gege</td>
+                        </tr>
+                        <tr>
+                            <td>g</td>
+                            <td>ggg</td>
+                            <td>ghsd</td>
+                            <td>tetg</td>
+                            <td>tetge</td>
+                            <td>gge</td>
+                            <td>gege</td>
+                        </tr>
+                        </table>
+                        </div>
+                        <div className="order_info" id="second">
+                        <table className="d-none" >
+                        <tr >
+                            <th>#</th>
+                            <th>Order Code</th>
+                            <th>Num of product</th>
+                            <th>Customer</th>
+                            <th>Amount</th>
+                            <th>Delivery Status</th>
+                            <th>Payment Status</th>
+                        </tr>
+                        <tr>
+                            <td>a</td>
+                            <td>ggg</td>
+                            <td>ghsd</td>
+                            <td>tetg</td>
+                            <td>tetge</td>
+                            <td>gge</td>
+                            <td>gege</td>
+                        </tr>
+                        <tr>
+                            <td>a</td>
+                            <td>ggg</td>
+                            <td>ghsd</td>
+                            <td>tetg</td>
+                            <td>tetge</td>
+                            <td>gge</td>
+                            <td>gege</td>
+                        </tr>
+                        <tr>
+                            <td>g</td>
+                            <td>ggg</td>
+                            <td>ghsd</td>
+                            <td>tetg</td>
+                            <td>tetge</td>
+                            <td>gge</td>
+                            <td>gege</td>
+                        </tr>
+                        <tr>
+                            <td>g</td>
+                            <td>ggg</td>
+                            <td>ghsd</td>
+                            <td>tetg</td>
+                            <td>tetge</td>
+                            <td>gge</td>
+                            <td>gege</td>
+                        </tr>
+
+                        <tr>
+                            <td>g</td>
+                            <td>ggg</td>
+                            <td>ghsd</td>
+                            <td>tetg</td>
+                            <td>tetge</td>
+                            <td>gge</td>
+                            <td>gege</td>
+                        </tr>
+                        <tr>
+                            <td>g</td>
+                            <td>ggg</td>
+                            <td>ghsd</td>
+                            <td>tetg</td>
+                            <td>tetge</td>
+                            <td>gge</td>
+                            <td>gege</td>
+                        </tr>
+                        <tr>
+                            <td>g</td>
+                            <td>ggg</td>
+                            <td>ghsd</td>
+                            <td>tetg</td>
+                            <td>tetge</td>
+                            <td>gge</td>
+                            <td>gege</td>
+                        </tr>
+                        <tr>
+                            <td>g</td>
+                            <td>ggg</td>
+                            <td>ghsd</td>
+                            <td>tetg</td>
+                            <td>tetge</td>
+                            <td>gge</td>
+                            <td>gege</td>
+                        </tr>
+                        <tr>
+                            <td>g</td>
+                            <td>ggg</td>
+                            <td>ghsd</td>
+                            <td>tetg</td>
+                            <td>tetge</td>
+                            <td>gge</td>
+                            <td>gege</td>
+                        </tr>
+                        <tr>
+                            <td>g</td>
+                            <td>ggg</td>
+                            <td>ghsd</td>
+                            <td>tetg</td>
+                            <td>tetge</td>
+                            <td>gge</td>
+                            <td>gege</td>
+                        </tr>
+                        </table>
+                       
                 </div>
+                <div class="container mt-4">
+                <ul class="pagination justify-content-center">
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+        <span class="sr-only">Previous</span>
+      </a>
+    </li>
+    <li class="page-item"><a class="page-link" href="#first">1</a></li>
+    <li class="page-item"><a class="page-link" href="#second">2</a></li>
+    <li class="page-item"><a class="page-link" href="#third">3</a></li>
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+        <span class="sr-only">Next</span>
+      </a>
+    </li>
+  </ul>
+        </div>
             </div>
         </>
     )
