@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { MultiSelect } from "react-multi-select-component";
 import { useNavigate } from 'react-router-dom';
+import Context from '../context/Context';
 import { AllUsers, SendEmailUrl } from '../urls';
 
 import './newsletter.css'
@@ -12,10 +13,11 @@ const Newsletter = (props) => {
         subject:'',
         text:''
     })
+    const {subscribers  } = useContext(Context); 
 
-    const [subscribers , setSubscribers] = useState([]);
-
-    const [options , setOptions ] = useState([]);
+    const [options , setOptions ] = useState([
+        
+    ]);
     
 
    const handleChange = (e)=>{
@@ -25,6 +27,15 @@ const Newsletter = (props) => {
     // selected emails 
     const [selected, setSelected] = useState([]);
 
+
+    useEffect(()=>{
+        showAlert('Hey! Start Emailing People :)','success'); 
+        let sub = {}; 
+        sub = subscribers.map((user)=>{
+            return {label:user.email , value:user.email}
+        })
+        setOptions(sub); 
+    },[]); 
 
     const sendEmails = () => {
         // console.log(input ,subscribers); 
@@ -65,7 +76,7 @@ const Newsletter = (props) => {
             <form className='mx-4 newsletter'>
                 
                 <div className="row mb-3">
-                    <label htmlFor="inputPassword3" className="col-sm-2 col-form-label">Subscriber</label>
+                    <label htmlFor="inputPassword3" className="col-sm-2 col-form-label">Select Emails : </label>
                     <div className="col-sm-10">
                         {
                             options.length > 0 && 
