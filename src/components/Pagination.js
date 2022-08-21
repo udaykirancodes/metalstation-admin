@@ -2,7 +2,7 @@ import React from 'react'
 
 function Pagination({ currentproducts , currentpage , setcurrentpage}) {
 
-  const data = []; 
+  const data = [0,1,2,3,4]; 
 
   for(let i=0 ; i<=currentproducts ; i++){
     data.push(i); 

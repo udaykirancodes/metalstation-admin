@@ -106,6 +106,7 @@ const Newproduct = (props) => {
                 form.append('images',file , file.name);
             }; 
         }
+        
         let adminToken = localStorage.getItem('adminToken'); 
         if(!adminToken){
             navigate('/login'); 
@@ -151,6 +152,7 @@ const Newproduct = (props) => {
                     </div>
                 </div>
             </div>
+            
             <div className="newProduct container"  style={{paddingTop:'5%'}}>
                 <form className="row g-3">
                     <div className="col-md-6">

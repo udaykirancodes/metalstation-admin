@@ -1,0 +1,39 @@
+.msgpage{
+    margin-top: 5rem;
+}
+
+.drop1{
+    position: relative;
+    font-size: 14px;
+    left: 46%;   
+}
+.marginform{
+    margin-left: 2rem;
+    }
+.drop2{
+    position: relative;
+    font-size: 14px;
+    left: 31%;
+}
+.dropdown a{
+    background-color: rgba(217, 217, 217, 0.37);
+    color: #828282;
+    border: 1px solid rgba(69, 69, 69, 1);
+}
+.navdown{
+    position: relative;
+    right: 2.5%;
+}
+/* message */
+.msgbox{
+    padding-top: 20px;
+    background: #E8F9FF;
+    margin-top: 20px;
+    border-Radius: 18px;
+    box-shadow: 0px 2px 18px 0px rgba(0, 0, 0, 0.25);
+}
+.msgbox button{
+    padding: 10px;
+    background: #24A1FD;
+    color: white;
+}

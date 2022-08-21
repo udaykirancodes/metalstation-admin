@@ -53,20 +53,31 @@ const Navbar = () => {
                                 </li>
                                 <li className="nav-item my-3">
                                     <i className="fa-solid fa-list my-auto mx-2 d-inline"></i>
+                                    <Link className={`nav-link ${location.pathname === '/enquiry' ? "active" : ""} my-auto d-inline`} to="/enquiry" >Enquiry</Link>
+                                </li>
+                                <li className="nav-item my-3">
+                                    <i className="fa-solid fa-list my-auto mx-2 d-inline"></i>
                                     <Link className={`nav-link ${location.pathname === '/product' ? "active" : ""} my-auto d-inline`} to="/product" >Products</Link>
+                                </li>
+
+                                <li className="nav-item my-3">
+                                    <i className="fa-solid fa-list my-auto mx-2 d-inline"></i>
+                                    <Link className={`nav-link ${location.pathname === '/msg' ? "active" : ""} my-auto d-inline`} to="/msg" >Message</Link>
                                 </li>
                                 <li className="nav-item my-3">
                                     <i className="fa-solid fa-list my-auto mx-2 d-inline"></i>
                                     <Link className={`nav-link ${location.pathname === '/sell' ? "active" : ""} my-auto d-inline`} to="/sell" >Sell</Link>
                                 </li>
-                                <li className="nav-item my-3">
+                                {/* <li className="nav-item my-3">
                                     <i className="fa-solid fa-list my-auto mx-2 d-inline"></i>
                                     <Link className={`nav-link ${location.pathname === '/scrap' ? "active" : ""} my-auto d-inline`} to="/scrap" >Scrap</Link>
-                                </li>
+                                </li> */}
                                 <li className="nav-item my-3">
                                     <i className="fa-solid fa-plus my-auto mx-2 d-inline"></i>
                                     <Link className={`nav-link ${location.pathname === '/newProduct' ? "active" : ""} my-auto d-inline`} to="/newProduct" >Add Product</Link>
                                 </li>
+
+                               
                                 <li className="nav-item my-3">
                                 <i className="fa-solid fa-bullhorn my-auto mx-2 d-inline"></i>
                                     <Link className={`nav-link ${location.pathname === '/newsletter' ? "active" : ""} my-auto d-inline`} to="/newsletter" >Newsletters</Link>
