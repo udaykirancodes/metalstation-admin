@@ -1,30 +1,30 @@
 // import "./order.css";
-import Pagination from '../../components/Pagination'; 
-import {useContext, useState , useEffect} from "react"
+import Pagination from '../../components/Pagination';
+import { useContext, useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom";
 import Context from "../../context/Context";
 
 
 
-const Sell = ({showAlert}) => {
-  const navigate = useNavigate(); 
+const Sell = ({ showAlert }) => {
+  const navigate = useNavigate();
 
   // pagination related code 
-  const [currentpage , setcurrentpage] = useState(1); 
-  const [perPage , setPerPage] = useState(5); 
-  
-  const indexOfLast  = currentpage * perPage ; 
-  const indexOfFirst = indexOfLast - perPage ;
+  const [currentpage, setcurrentpage] = useState(1);
+  const [perPage, setPerPage] = useState(5);
 
-  const {sell} = useContext(Context); 
+  const indexOfLast = currentpage * perPage;
+  const indexOfFirst = indexOfLast - perPage;
 
-    useEffect(() => {
-        let adminToken = localStorage.getItem('adminToken'); 
-        if(!adminToken){
-            navigate('/login'); 
-        }
-        showAlert('Hey, You got these many !','success'); 
-    }, [])
+  const { sell } = useContext(Context);
+
+  useEffect(() => {
+    let adminToken = localStorage.getItem('adminToken');
+    if (!adminToken) {
+      navigate('/login');
+    }
+    showAlert('Hey, You got these many !', 'success');
+  }, [])
   return (
     <>
       <div style={{ height: "60px" }}></div>
@@ -39,41 +39,41 @@ const Sell = ({showAlert}) => {
       <div style={{ marginLeft: "20px", marginRight: "20px" }}>
         <div className="order_info" id="first">
           <table>
-          <tbody >
-            <tr className="first">
-                  <th>Sl No : </th>
-                  <th>Id </th>
-                  <th>Email </th>
-                  <th>Full Name</th>
-                  <th>Phone</th>
-                  <th>Type</th>
-                  <th>Details</th>
-                  <th></th>
-                </tr>
+            <tbody >
+              <tr className="first">
+                <th>Sl No : </th>
+                <th>Id </th>
+                <th>Email </th>
+                <th>Full Name</th>
+                <th>Phone</th>
+                <th>Type</th>
+                <th>Details</th>
+                <th></th>
+              </tr>
               {
-                sell.map((element,index)=>{
-                  if(index >= indexOfFirst && index<indexOfLast){
-                  return  <tr key={index} className="first">
-                  <th>{index+1}</th>
-                  <th>{element._id}</th>
-                  <th>{element.email}</th>
-                  <th>{element.fullName}</th>
-                  <th>{element.phone}</th>
-                  <th>{element.type}</th>
-                  <th>{element.type ==='automobile' ? element.details.vechileNumber : '' }</th>
-                  <th>{element.type ==='automobile' ? element.details.vechileName : '' }</th>
-                </tr>
+                sell.map((element, index) => {
+                  if (index >= indexOfFirst && index < indexOfLast) {
+                    return <tr key={index} className="first">
+                      <th>{index + 1}</th>
+                      <th>{element._id}</th>
+                      <th>{element.email}</th>
+                      <th>{element.fullName}</th>
+                      <th>{element.phone}</th>
+                      <th>{element.type}</th>
+                      <th>{element.type === 'automobile' ? element.details.vechileNumber : ''}</th>
+                      <th>{element.type === 'automobile' ? element.details.vechileName : ''}</th>
+                    </tr>
                   }
                 })
               }
 
             </tbody>
-           
+
           </table>
         </div>
 
-        <Pagination currentproducts={sell.length/perPage} currentpage={currentpage} setcurrentpage={setcurrentpage}   />
-    
+        <Pagination currentproducts={sell.length / perPage} currentpage={currentpage} setcurrentpage={setcurrentpage} />
+
       </div>
     </>
   );

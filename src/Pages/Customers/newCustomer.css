@@ -31,6 +31,9 @@
 .table{
     border: 1px solid rgba(193, 193, 193, 1);
 }
+td,th{
+    vertical-align: middle
+}
 .table thead{
     background-color: #24A1FD;
     color: #FFFFFF;
@@ -44,6 +47,11 @@
 }
 .view{
     color: rgba(63, 63, 63, 1);
+    cursor: pointer;
+    text-decoration: underline;
+}
+.view:hover{
+    color: blueviolet;
 }
 /* view*/
 .modal-body{
