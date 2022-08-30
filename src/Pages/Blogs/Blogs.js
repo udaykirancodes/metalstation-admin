@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Context from '../../context/Context';
+import Pagination from '../../components/Pagination';
 import { UndoDeleteBlogUrl, backendurl, EditBlogUrl, DeleteBlogUrl } from '../../urls';
 import './blog.css'
 const Blogs = (props) => {
@@ -12,7 +13,16 @@ const Blogs = (props) => {
     // context api 
     const { blogs, setblogs } = useContext(Context);
 
+    // pagination related code 
+    const [currentpage, setcurrentpage] = useState(1);
+    const [perPage, setPerPage] = useState(5);
+
+    const indexOfLast = currentpage * perPage;
+    const indexOfFirst = indexOfLast - perPage;
+
+
     const navigate = useNavigate();
+
     // const [blogs , setblogs ] = useState([]); 
     const [id, setId] = useState('');
     const [title, setTitle] = useState('')
@@ -22,6 +32,7 @@ const Blogs = (props) => {
     // fetch blogs & show the blogs 
     useEffect(() => {
         let adminToken = localStorage.getItem('adminToken');
+        document.title = "Metal Station"
         if (!adminToken) {
             navigate('/login');
         }
@@ -320,6 +331,10 @@ const Blogs = (props) => {
                     </div>
                 </div>
             </div>
+
+
+
+            <Pagination currentproducts={blogs.length / perPage} currentpage={currentpage} setcurrentpage={setcurrentpage} />
         </>
     )
 }

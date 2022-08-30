@@ -13,6 +13,12 @@ const NewOrder = ({ showAlert }) => {
 
   const { Orders, setOrders } = useContext(Context);
 
+  // pagination related code 
+  const [currentpage, setcurrentpage] = useState(1);
+  const [perPage, setPerPage] = useState(5);
+
+  const indexOfLast = currentpage * perPage;
+  const indexOfFirst = indexOfLast - perPage;
 
   // accept an order 
   const UpdateOrder = (id, status) => {
@@ -174,32 +180,34 @@ const NewOrder = ({ showAlert }) => {
                   :
                   Orders.map((ord, index) => {
                     let address = ord.items[0].address;
-                    return (
-                      <tr key={index}>
-                        <th scope="row">{index + 1}</th>
-                        <td>{ord._id}</td>
-                        <td>
-                          {
-                            ord.items.map((o, index) => {
+                    if (index >= indexOfFirst && index < indexOfLast) {
+                      return (
+                        <tr key={index}>
+                          <th scope="row">{index + 1}</th>
+                          <td>{ord._id}</td>
+                          <td>
+                            {
+                              ord.items.map((o, index) => {
 
-                              return <>
-                                <p key={index}><a style={{ color: 'blue', textDecoration: 'underline', fontSize: '14px' }}>{o.products.productid} </a>Quantity : {o.products.quantity}</p>
-                              </>
-                            })
-                          }
-                        </td>
-                        <td>{ord.items[0].userid}</td>
-                        <td>{ord.items[0].price}</td>
-                        <td>{address.pincode} <br /> {address.location} <br />{address.city}</td>
-                        <td>
-                          <span>{ord.items[0].status}</span> <br />
-                          {/* <button className='btn btn-sm btn-danger' style={{ margin: '5px' }} onClick={() => UpdateOrder(ord._id, "cancelled")}>Cancel</button> */}
-                          <button className='btn btn-sm btn-info' style={{ margin: '5px' }} onClick={() => UpdateOrder(ord._id, "packed")}>Packed</button>
-                          <button className='btn btn-sm btn-warning' style={{ margin: '5px' }} onClick={() => UpdateOrder(ord._id, "shipped")}>Shipped</button>
-                          <button className='btn btn-sm btn-success' style={{ margin: '5px' }} onClick={() => UpdateOrder(ord._id, "delivered")}>Delivered</button>
-                        </td>
-                      </tr>
-                    )
+                                return <>
+                                  <p key={index}><a style={{ color: 'blue', textDecoration: 'underline', fontSize: '14px' }}>{o.products.productid} </a>Quantity : {o.products.quantity}</p>
+                                </>
+                              })
+                            }
+                          </td>
+                          <td>{ord.items[0].userid}</td>
+                          <td>{ord.items[0].price}</td>
+                          <td>{address.pincode} <br /> {address.location} <br />{address.city}</td>
+                          <td>
+                            <span>{ord.items[0].status}</span> <br />
+                            {/* <button className='btn btn-sm btn-danger' style={{ margin: '5px' }} onClick={() => UpdateOrder(ord._id, "cancelled")}>Cancel</button> */}
+                            <button className='btn btn-sm btn-info' style={{ margin: '5px' }} onClick={() => UpdateOrder(ord._id, "packed")}>Packed</button>
+                            <button className='btn btn-sm btn-warning' style={{ margin: '5px' }} onClick={() => UpdateOrder(ord._id, "shipped")}>Shipped</button>
+                            <button className='btn btn-sm btn-success' style={{ margin: '5px' }} onClick={() => UpdateOrder(ord._id, "delivered")}>Delivered</button>
+                          </td>
+                        </tr>
+                      )
+                    }
                   })
               }
 
@@ -210,7 +218,7 @@ const NewOrder = ({ showAlert }) => {
       </div>
 
 
-      <Pagination />
+      <Pagination currentproducts={Orders.length / perPage} currentpage={currentpage} setcurrentpage={setcurrentpage} />
 
     </div>
 

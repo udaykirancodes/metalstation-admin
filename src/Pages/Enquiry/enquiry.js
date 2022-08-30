@@ -11,6 +11,14 @@ const Enquiry = () => {
 
   const [search, setSearch] = useState('');
 
+  // pagination related code 
+  const [currentpage, setcurrentpage] = useState(1);
+  const [perPage, setPerPage] = useState(5);
+
+  const indexOfLast = currentpage * perPage;
+  const indexOfFirst = indexOfLast - perPage;
+
+
 
   // const { Enquiry, setEnquiry } = useState(Context);
   const [Enquiry, setEnquiry] = useState([])
@@ -181,25 +189,27 @@ const Enquiry = () => {
                   })
                   :
                   Enquiry.map((enq, index) => {
-                    return (
-                      <tr key={index}>
-                        <th scope="row">{index + 1}</th>
-                        <td>{enq._id}</td>
-                        <td>{enq.productid}</td>
-                        <td>{enq.name} <br /> {enq.phone}</td>
-                        <td>{getdate(enq.createdAt)}</td>
-                        <td>{enq.status}</td>
-                        {
-                          !enq.price &&
-                          <>
-                            <td>
-                              <input type="number" placeholder='Add Price' onChange={(e) => setprice(e.target.value)} style={{ width: '100px' }}  ></input>
-                              <button className='btn  btn-sm btn-success' onClick={(e) => AddPrice(enq._id)} style={{ width: '50px', marginLeft: '10px' }}> Add</button>
-                            </td>
-                          </>
-                        }
-                      </tr>
-                    )
+                    if (index >= indexOfFirst && index < indexOfLast) {
+                      return (
+                        <tr key={index}>
+                          <th scope="row">{index + 1}</th>
+                          <td>{enq._id}</td>
+                          <td>{enq.productid}</td>
+                          <td>{enq.name} <br /> {enq.phone}</td>
+                          <td>{getdate(enq.createdAt)}</td>
+                          <td>{enq.status}</td>
+                          {
+                            !enq.price &&
+                            <>
+                              <td>
+                                <input type="number" placeholder='Add Price' onChange={(e) => setprice(e.target.value)} style={{ width: '100px' }}  ></input>
+                                <button className='btn  btn-sm btn-success' onClick={(e) => AddPrice(enq._id)} style={{ width: '50px', marginLeft: '10px' }}> Add</button>
+                              </td>
+                            </>
+                          }
+                        </tr>
+                      )
+                    }
                   })
 
               }
@@ -210,29 +220,7 @@ const Enquiry = () => {
         </div>
       </div>
 
-      <Pagination />
-
-
-      {/* <nav aria-label="Page navigation example " className="" >
-        <ul className="pagination justify-content-center mt-4">
-
-          <li className="page-item"><Link className="page-link text-light " to="#" style={{ "background-color": "#24A1FD" }}>&lt;&lt;</Link></li>
-
-          <li className="page-item "><Link className="page-link text-light" to="#" style={{ "background-color": "#35C0ED" }} >&lt;</Link></li>
-          <li className="page-item text-decoration-none text-dark"><Link className="page-link" to="#" >1</Link></li>
-          <li className="page-item"><Link className="page-link" to="#" >2</Link></li>
-          <li className="page-item"><Link className="page-link" to="#" >3</Link></li>
-          <li className="page-item"><Link className="page-link" to="#" >4</Link></li>
-          <li className="page-item"><Link className="page-link" to="#" >5</Link></li>
-          <li className="page-item"><Link className="page-link" to="#" >6</Link></li>
-          <li className="page-item"><Link className="page-link" to="#" >.</Link></li>
-          <li className="page-item"><Link className="page-link" to="#" >.</Link></li>
-          <li className="page-item"><Link className="page-link" to="#" >.</Link></li>
-          <li className="page-item"><Link className="page-link" to="#" >20</Link></li>
-          <li className="page-item"><Link className="page-link text-light" to="#" style={{ "background-color": "#35C0ED" }} > &gt; </Link></li>
-          <li className="page-item"><Link className="page-link text-light" to="#" style={{ "background-color": "#24A1FD" }}> &gt;&gt;</Link></li>
-        </ul>
-      </nav> */}
+      <Pagination currentproducts={Enquiry.length / perPage} currentpage={currentpage} setcurrentpage={setcurrentpage} />
 
     </div>
   )

@@ -16,14 +16,26 @@ const Newproduct = (props) => {
 
     const { products, setproducts } = useContext(Context);
 
+    const [final, setFinal] = useState([]);
+
+    useEffect(() => {
+        console.log(final);
+    }, [final])
+
     const onSelectFile = (event) => {
+        // setFinal(event.target.files);
+        console.log(event.target.files);
         const selectedFiles = event.target.files;
+
+
+
+
         const selectedFilesArray = Array.from(selectedFiles);
 
         const imagesArray = selectedFilesArray.map((file) => {
             return URL.createObjectURL(file);
         });
-
+        setFinal(selectedFilesArray);
         setSelectedImages((previousImages) => previousImages.concat(imagesArray));
 
         // FOR BUG IN CHROME
@@ -109,8 +121,8 @@ const Newproduct = (props) => {
         form.append('isFeatured', input.isFeatured);
         form.append('table', JSON.stringify(serviceList));
         // appending images 
-        if (selectedImages) {
-            for (const file of selectedImages) {
+        if (final) {
+            for (const file of final) {
                 form.append('images', file, file.name);
             };
         }
@@ -130,7 +142,7 @@ const Newproduct = (props) => {
             .then((data) => {
                 console.log(data)
                 if (data.success === true) {
-                    setproducts(products.cancat(data.data))
+                    setproducts(products.concat(data.data))
                     showAlert("Product Added Successfully ", "success");
                     navigate('/product');
                 }
@@ -316,6 +328,8 @@ const Newproduct = (props) => {
                     <div className="col-md-2">
                     </div>
 
+
+
                     <div className="col-md-4">
                         <label htmlFor="service">Table Input(s)</label>
                         {serviceList.map((singleService, index) => (
@@ -365,12 +379,12 @@ const Newproduct = (props) => {
                             </div>
                         ))}
                     </div>
-                    <div className="mb-3">
+
+                    {/* <div className="mb-3">
                         <label htmlFor="formFileMultiple" className="form-label">Product Image</label>
                         <input className="form-control" type="file" id="formFileMultiple" onChange={(e) => { setSelectedImages(e.target.files) }} multiple accept=".jpeg,.jpg,.png" />
-                    </div>
-
-                    {/* <div className="container">
+                    </div> */}
+                    <div className="container">
                         <section className="ImagePreview">
                             <label className="ImageLabel">
                                 + Add Images
@@ -386,7 +400,30 @@ const Newproduct = (props) => {
                             </label>
                             <br />
                         </section>
-                    </div> */}
+                    </div>
+
+                    {selectedImages.length === 0 ? "" :
+                        <div className="images">
+                            {selectedImages &&
+                                selectedImages.map((image, index) => {
+                                    return (
+                                        <div key={image} className="image">
+                                            <img className="preview" src={image}
+                                                height={200}
+                                                width={300}
+                                                alt="upload" />
+                                            <div className="ImgDelete">
+
+                                                <button className="ImageDelete" onClick={() => deleteHandler(image)}>
+                                                    x
+                                                </button>
+                                            </div>
+                                            <p className="ImageP">{index + 1}</p>
+                                        </div>
+                                    );
+                                })}
+                        </div>
+                    }
 
 
                     <button style={{ width: "60%", margin: '3rem auto' }} type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >

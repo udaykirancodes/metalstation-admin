@@ -4,6 +4,9 @@ import './newuiproducts.css'
 import { Link } from 'react-router-dom'
 import Context from '../../context/Context';
 import { backendurl, EditProductUrl, ProductDeleteUrl } from '../../urls';
+import Pagination from '../../components/Pagination';
+
+
 const NewUIProducts = ({ showAlert }) => {
 
   const [arrowUp, setArrowUp] = useState(false);
@@ -24,6 +27,12 @@ const NewUIProducts = ({ showAlert }) => {
   const { products, setproducts } = useContext(Context);
   const [id, setid] = useState('');
   const [search, setsearch] = useState('');
+  // pagination related code 
+  const [currentpage, setcurrentpage] = useState(1);
+  const [perPage, setPerPage] = useState(8);
+
+  const indexOfLast = currentpage * perPage;
+  const indexOfFirst = indexOfLast - perPage;
 
 
   const handleChange = (e) => {
@@ -275,33 +284,35 @@ const NewUIProducts = ({ showAlert }) => {
             })
             :
             products.map((pro, index) => {
-              return (
-                <div key={index} className="card">
-                  <div className="card__image-container">
-                    <img
-                      src={backendurl + pro.img[0]}
-                      alt="image"
-                    />
+              if (index >= indexOfFirst && index < indexOfLast) {
+                return (
+                  <div key={index} className="card">
+                    <div className="card__image-container">
+                      <img
+                        src={backendurl + pro.img[0]}
+                        alt="image"
+                      />
+                    </div>
+                    <div className="card__content">
+                      <h4 className="card__title">
+                        {pro.name}
+                      </h4>
+                      <p ><b>1 Ton </b><small> (Min. Order)</small></p>
+                      {
+                        pro.price ?
+                          <h4 className="card__price">₹{pro.price}/-</h4>
+                          :
+                          <p>No Price for this product</p>
+                      }
+                    </div>
+                    <div className='d-flex justify-content-around mb-1'>
+                      <button className='btn btn-sm btn-warning' data-bs-toggle="modal" data-bs-target="#modelforedit" onClick={() => handleEdit(pro._id)}>Edit</button>
+                      <button className='btn btn-sm btn-danger' data-bs-toggle="modal" data-bs-target="#modelfordelete" onClick={() => handleDelete(pro._id)}>Delete</button>
+                    </div>
+                    {/* <i className="fa-solid .text-success fa-file-pen mx-2" role='button' data-bs-toggle="modal" data-bs-target="#modelforedit" onClick={() => handleEdit(element._id)}></i> */}
                   </div>
-                  <div className="card__content">
-                    <h4 className="card__title">
-                      {pro.name}
-                    </h4>
-                    <p ><b>1 Ton </b><small> (Min. Order)</small></p>
-                    {
-                      pro.price ?
-                        <h4 className="card__price">₹{pro.price}/-</h4>
-                        :
-                        <p>No Price for this product</p>
-                    }
-                  </div>
-                  <div className='d-flex justify-content-around mb-1'>
-                    <button className='btn btn-sm btn-warning' data-bs-toggle="modal" data-bs-target="#modelforedit" onClick={() => handleEdit(pro._id)}>Edit</button>
-                    <button className='btn btn-sm btn-danger' data-bs-toggle="modal" data-bs-target="#modelfordelete" onClick={() => handleDelete(pro._id)}>Delete</button>
-                  </div>
-                  {/* <i className="fa-solid .text-success fa-file-pen mx-2" role='button' data-bs-toggle="modal" data-bs-target="#modelforedit" onClick={() => handleEdit(element._id)}></i> */}
-                </div>
-              )
+                )
+              }
             })
         }
       </div>
@@ -363,6 +374,27 @@ const NewUIProducts = ({ showAlert }) => {
                   <input type="number" name='minPrice' onChange={(e) => handleChange(e)} value={input.minPrice || ''} className="form-control" id="priceRange" />
                 </div>
                 <div className="col-md-3"></div>
+                <div className="col-md-4">
+                  <label htmlFor="category" className="form-label">Category</label>
+                  <select id="category" className="form-select" name='category' onChange={(e) => handleChange(e)}>
+                    <option value="">Choose...</option>
+                    <option value="steel">Stell</option>
+                    <option value="aluminium">Aluminium</option>
+                    <option value="copper">Copper</option>
+                    <option value="machinery">Machinery</option>
+                    <option value="autoparts">Autoparts</option>
+                  </select>
+                </div>
+                <div className="col-md-4">
+                  <label htmlFor="subCategory" className="form-label">Sub Category</label>
+                  <select id="subCategory" className="form-select" name='subCategory' onChange={(e) => handleChange(e)}>
+                    <option value="">Choose...</option>
+                    <option value="rod">Rod</option>
+                    <option value="wire">Wire</option>
+                    <option value="pipe">Pipe</option>
+                    <option value="bar">Bar</option>
+                  </select>
+                </div>
                 <div className="form-check">
                   <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" onChange={(e) => checkForCheckBox(e)} />
                   <label className="form-check-label" htmlFor="flexCheckDefault">
@@ -424,7 +456,7 @@ const NewUIProducts = ({ showAlert }) => {
         </div>
       </div>
 
-
+      <Pagination currentproducts={products.length / perPage} currentpage={currentpage} setcurrentpage={setcurrentpage} />
       {/* <!-- Modal for deletion--> */}
       <div className="modal fade" id="modelfordelete" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div className="modal-dialog">
