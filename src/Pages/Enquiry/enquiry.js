@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import './enquiry.css';
 import { GetEnquiries, UpdateEnquiry } from "../../urls";
 import Pagination from "../../components/Pagination";
+import Context from '../../context/Context';
 
 
 const Enquiry = () => {
   const navigate = useNavigate();
-  const [Enquiry, setEnquiry] = useState([])
+
   const [search, setSearch] = useState('');
 
-  const fetchdata = async () => {
+
+  // const { Enquiry, setEnquiry } = useState(Context);
+  const [Enquiry, setEnquiry] = useState([])
+
+  const getAllEnquiry = async () => {
     let adminToken = localStorage.getItem('adminToken');
-    if (!adminToken) {
-      navigate('/login')
-      return;
-    }
     // fetch the data 
     let res = await fetch(GetEnquiries, {
       method: "GET",
@@ -26,21 +27,16 @@ const Enquiry = () => {
     })
     let data = await res.json();
     if (data.success) {
+      // console.log(data.data);
       setEnquiry(data.data); // 
     }
-    else {
-      navigate('/login');
-    }
   }
-  useEffect(() => {
-    fetchdata();
-  }, [])
-
   const getdate = (data) => {
     let date = new Date(data);
     return date.toDateString();
   }
   const [price, setprice] = useState(0);
+
 
   // add price to enquiry 
   const AddPrice = async (id) => {
@@ -80,6 +76,11 @@ const Enquiry = () => {
       setEnquiry(enq);
     }
   }
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    getAllEnquiry()
+  }, [])
+
   return (
     <div>
       <div className="container-fluid enquirypage">

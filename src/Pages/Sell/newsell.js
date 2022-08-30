@@ -19,35 +19,15 @@ const Newsell = ({ showAlert }) => {
   const indexOfLast = currentpage * perPage;
   const indexOfFirst = indexOfLast - perPage;
 
-  const [sell, setsell] = useState([])
+  const { sell } = useContext(Context);
 
-  // get all the sells 
-  const getAllSell = () => {
-    let token = localStorage.getItem('adminToken');
-    fetch(AllSellUrl, {
-      method: "GET",
-      headers: {
-        'Content-Type': 'application/json',
-        'adminToken': token
-      }
-    })
-      .then((res) => res.json())
-      .then(data => {
-        if (data.success) {
-          setsell(data.sells);
-          console.log('got sell');
-        }
-        else {
-          console.log('error in getting sell');
-        }
-      })
-  }
+
+
   useEffect(() => {
     let adminToken = localStorage.getItem('adminToken');
     if (!adminToken) {
       navigate('/login');
     }
-    getAllSell()
     showAlert('Hey, You got these many !', 'success');
   }, [])
   return (

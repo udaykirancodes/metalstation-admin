@@ -2,18 +2,17 @@ import React, { useState, useEffect } from "react";
 
 import Context from "./Context";
 
-import { AllBlgos, GetAllProducts, AllSellUrl, AllUsers, AllOrdersUrl, AllScrapUrl } from "../urls";
+import { AllBlgos, GetAllOrders, GetEnquiries, GetAllProducts, AllSellUrl, AllUsers, AllOrdersUrl, AllScrapUrl } from "../urls";
 
 const GlobalState = (props) => {
-
     const [users, setusers] = useState([]);
     const [blogs, setblogs] = useState([]);
     const [subscribers, setsubscribers] = useState([]);
     const [products, setproducts] = useState([]);
-    const [orders, setorders] = useState([]);
-
+    const [Orders, setOrders] = useState([])
+    const [sell, setsell] = useState([])
     const [adminToken, setadminToken] = useState('');
-
+    const [Enquiry, setEnquiry] = useState([])
 
     // get all users list 
     const getAllUsers = async () => {
@@ -84,6 +83,68 @@ const GlobalState = (props) => {
 
     }
 
+    // get all orders 
+    const getAllOrders = async () => {
+        // fetch the data 
+        let token = localStorage.getItem('adminToken');
+        let res = await fetch(GetAllOrders, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'adminToken': token
+            }
+        })
+        let data = await res.json();
+        console.log(data);
+        if (data.success) {
+            console.log('Got New Orders')
+            setOrders(data.orders);
+        }
+    }
+
+    // get sells 
+    // get all the sells 
+    const getAllSell = () => {
+        let token = localStorage.getItem('adminToken');
+        fetch(AllSellUrl, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'adminToken': token
+            }
+        })
+            .then((res) => res.json())
+            .then(data => {
+                if (data.success) {
+                    setsell(data.sells);
+                    console.log('got sell');
+                }
+                else {
+                    console.log('error in getting sell');
+                }
+            })
+    }
+
+    // get enquiry 
+    const getAllEnquiry = async () => {
+        let adminToken = localStorage.getItem('adminToken');
+        // fetch the data 
+        let res = await fetch(GetEnquiries, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'adminToken': adminToken
+            }
+        })
+        let data = await res.json();
+        if (data.success) {
+            // console.log(data.data);
+            setEnquiry(data.data); // 
+        }
+    }
+    useEffect(() => {
+        console.log('Effect : ', Enquiry.length)
+    }, [Enquiry])
     // on page load 
     useEffect(() => {
         let token = localStorage.getItem('adminToken');
@@ -91,13 +152,16 @@ const GlobalState = (props) => {
             setadminToken(token);
         }
         getAllUsers();
+        getAllOrders();
         getAllBlogs();
+        getAllSell();
+        getAllEnquiry();
         getAllProducts();
     }, [])
 
 
     return (
-        <Context.Provider value={{ users, setusers, blogs, setblogs, subscribers, setsubscribers, setorders, products, setproducts, getAllProducts, orders, adminToken, setadminToken }}>
+        <Context.Provider value={{ users, setusers, blogs, setblogs, Enquiry, setEnquiry, subscribers, setsubscribers, Orders, setOrders, sell, setsell, products, setproducts, getAllProducts, adminToken, setadminToken }}>
             {props.children}
         </Context.Provider>
     )

@@ -1,35 +1,18 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import './neworder.css'
 import { Link, useNavigate } from 'react-router-dom'
 import { GetAllOrders, AcceptOrderUrl } from "../../urls";
 import Pagination from "../../components/Pagination";
+import Context from '../../context/Context';
 
 
 const NewOrder = ({ showAlert }) => {
   const navigate = useNavigate();
-  const [Orders, setOrders] = useState([])
+
   const [search, setSearch] = useState('');
 
-  const fetchdata = async () => {
-    let adminToken = localStorage.getItem('adminToken');
-    if (!adminToken) {
-      navigate('/login')
-      return;
-    }
-    // fetch the data 
-    let res = await fetch(GetAllOrders, {
-      method: "GET",
-      headers: {
-        'Content-Type': 'application/json',
-        'adminToken': adminToken
-      }
-    })
-    let data = await res.json();
-    console.log(data);
-    if (data.success) {
-      setOrders(data.orders); // 
-    }
-  }
+  const { Orders, setOrders } = useContext(Context);
+
 
   // accept an order 
   const UpdateOrder = (id, status) => {
@@ -69,7 +52,11 @@ const NewOrder = ({ showAlert }) => {
   }
 
   useEffect(() => {
-    fetchdata();
+    let adminToken = localStorage.getItem('adminToken');
+    if (!adminToken) {
+      navigate('/login')
+      return;
+    }
   }, [])
 
   const getdate = (data) => {

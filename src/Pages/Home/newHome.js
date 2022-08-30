@@ -6,9 +6,30 @@ import { AllBlgos } from '../../urls';
 import './newhome.css'
 const Home = () => {
   const navigate = useNavigate();
-  const [pending, setpending] = useState([]);
+  const { Orders, sell, Enquiry, users, products } = useContext(Context);
 
-  const { users, products, orders, blogs } = useContext(Context);
+  const [pendingOrders, setPendingOrders] = useState(0);
+  const [shippingOrders, setshippingOrders] = useState(0);
+  const [sold, setSold] = useState(0);
+  const calculate = () => {
+    let p = Orders.filter((ord) => ord.items[0].status === "pending");
+    setPendingOrders(p.length);
+    let q = Orders.filter((ord) => ord.items[0].status === "shipped");
+    setshippingOrders(q.length);
+    let r = Orders.filter((ord) => ord.items[0].status === "delivered");
+    setSold(r.length)
+  }
+
+  useEffect(() => {
+    let token = localStorage.getItem('adminToken');
+    if (!token) {
+      navigate('/login')
+      return;
+    }
+    console.log('reload');
+    calculate();
+  }, [Orders, Enquiry])
+
   return (
     <>
       <div className="container-fluid">
@@ -18,21 +39,20 @@ const Home = () => {
               <div className="col-md-5 col-11">
                 <div className="row text-center">
                   <div className="col-md-12 bg-main mb-2">
-                    <p>Pending Buy Orders <br /><span>77</span> <br /> <Link to="/index.html" text="view All" className="" /></p>
+                    <p>Pending Buy Orders <br /><span>{pendingOrders}</span> <br /> </p>
                   </div>
                   <div className="col-md-12 bg-main">
-                    <p>Pending Sell Orders <br /><span>54</span>  <br /> <Link to="/index.html" text="view All" className="" /></p>
+                    <p>Total Sell Orders <br /><span>{sell.length}</span>  <br /></p>
                   </div>
 
                 </div>
               </div>
               <div className="col-md-5 text-center priceq bg-main w-90">
-                <p> Price Enquiries<br /><span>77</span> </p>
+                <p> Price Enquiries<br /><span>{Enquiry.length}</span> </p>
                 <button text="" type="button" className="btn w-100" />
                 <button text="" type="button" className="btn w-100" />
                 <button text="" type="button" className="btn w-100" />
                 <button text="" type="button" className="btn w-100" />
-                <Link to="/index.html" text="view All" className="" />
               </div>
             </div>
           </div>
@@ -41,12 +61,11 @@ const Home = () => {
             <button text="" type="button" className="btn w-100" />
             <button text="" type="button" className="btn w-100" />
             <button text="" type="button" className="btn w-100" />
-            <Link to="./mess.html" text="view All" className="" />
           </div>
           <div className="col-md-4 col-11">
-            <div className="col-md-11 bg-main text-center mb-2 p-1"> <p>Order Under Delivey <br /><span>12</span> <br />
-              <Link to="" text="View All" /></p></div>
-            <div className="col-md-11 bg-main text-center mb-2 p-2"> <p>Total Orders in Cart<br /><span>12</span> <br /></p></div>
+            <div className="col-md-11 bg-main text-center mb-2 p-1"> <p>Current Orders Shipping <br /><span>{shippingOrders}</span> <br />
+            </p></div>
+            <div className="col-md-11 bg-main text-center mb-2 p-2"> <p>Total Orders in Cart<br /><span>{Orders.length}</span> <br /></p></div>
           </div>
 
         </div>
@@ -61,12 +80,12 @@ const Home = () => {
               <div className="col-md-3 text-center col-11">
                 <div className="col-md-12 bg-main ">
                   <p>Total No of <br /> Customers <br /><span>{users.length}</span> <br />
-                    <Link to="/index.html" text="view Details" className="" /></p>
+                  </p>
                 </div>
               </div>
-              <div className="col-md-3 text-center col-11"><div className="col-md-12 bg-main "> <p>Total No of Orders<br />Bought<br /><span>65</span> <br />
+              <div className="col-md-3 text-center col-11"><div className="col-md-12 bg-main "> <p>Total No of Orders<br />Bought<br /><span>{Orders.length}</span> <br />
               </p></div></div>
-              <div className="col-md-3 text-center col-11"><div className="col-md-12 bg-main "> <p>Total No of Orders<br />Sold<br /><span>23</span> <br />
+              <div className="col-md-3 text-center col-11"><div className="col-md-12 bg-main "> <p>Total No of Orders<br />Sold<br /><span>{sold}</span> <br />
               </p></div></div>
               <div className="col-md-3 text-center col-11"><div className="col-md-12 bg-main "> <p>Total No of<br />Products (live) <br /><span>{products.length}</span> <br />
               </p></div></div>

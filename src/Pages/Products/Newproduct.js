@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Select from 'react-select';
 import './newProduct.css'
 
 import { AddProductUrl } from '../../urls';
 import { useNavigate } from 'react-router-dom';
+import Context from '../../context/Context';
 // import ImagePreview from '../../components/ImagePreview';
 
 
@@ -12,6 +13,8 @@ const Newproduct = (props) => {
 
     // Image Preiview start 
     const [selectedImages, setSelectedImages] = useState([]);
+
+    const { products, setproducts } = useContext(Context);
 
     const onSelectFile = (event) => {
         const selectedFiles = event.target.files;
@@ -84,14 +87,19 @@ const Newproduct = (props) => {
 
 
     const AddProduct = () => {
+        console.log(typeof (input.price))
         let form = new FormData();
         form.append('name', input.name);
         form.append('category', input.category);
         form.append('description', input.description);
         form.append('shortDescription', input.shortDescription);
-        form.append('price', input.price);
-        form.append('minPrice', input.minPrice);
-        form.append('maxPrice', input.maxPrice);
+        if (input.price) {
+            form.append('price', input.price);
+        }
+        if (input.minPrice && input.maxPrice) {
+            form.append('minPrice', input.minPrice);
+            form.append('maxPrice', input.maxPrice);
+        }
         form.append('heigth', input.height);
         form.append('width', input.width);
         form.append('length', input.length);
@@ -122,8 +130,9 @@ const Newproduct = (props) => {
             .then((data) => {
                 console.log(data)
                 if (data.success === true) {
-                    navigate('/product');
+                    setproducts(products.cancat(data.data))
                     showAlert("Product Added Successfully ", "success");
+                    navigate('/product');
                 }
                 else {
                     showAlert(data.msg, "danger");
@@ -288,7 +297,8 @@ const Newproduct = (props) => {
                     </div>
                     <div className="col-md-2">
                         {
-                            !input.price && <>
+                            // !input.price && 
+                            <>
                                 <label htmlFor="minPrice" className="form-label">Minimum Price</label>
                                 <input type="number" name='minPrice' onChange={(e) => handleInput(e)} className="form-control" id="priceRange" />
                             </>
@@ -296,7 +306,8 @@ const Newproduct = (props) => {
                     </div>
                     <div className="col-md-2">
                         {
-                            !input.price && <>
+                            // !input.price &&
+                            <>
                                 <label htmlFor="maxPrice" className="form-label">Minimum Price</label>
                                 <input type="number" name='maxPrice' onChange={(e) => handleInput(e)} className="form-control" id="priceRange" />
                             </>

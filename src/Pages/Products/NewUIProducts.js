@@ -3,25 +3,157 @@ import React, { useContext, useState } from 'react'
 import './newuiproducts.css'
 import { Link } from 'react-router-dom'
 import Context from '../../context/Context';
-import { backendurl } from '../../urls';
-const NewUIProducts = () => {
+import { backendurl, EditProductUrl, ProductDeleteUrl } from '../../urls';
+const NewUIProducts = ({ showAlert }) => {
 
   const [arrowUp, setArrowUp] = useState(false);
-  const [input, setinput] = useState({});
-  const { products } = useContext(Context);
-  const handleChange = () => {
+  const [input, setinput] = useState({
+    id: '',
+    name: '',
+    description: '',
+    shortDescription: '',
+    price: null,
+    minPrice: null,
+    maxPrice: null,
+    heigth: '',
+    width: '',
+    length: '',
+    weight: '',
+    color: ''
+  });
+  const { products, setproducts } = useContext(Context);
+  const [id, setid] = useState('');
+  const [search, setsearch] = useState('');
 
+
+  const handleChange = (e) => {
+    setinput({ ...input, [e.target.name]: e.target.value })
+  }
+  const checkForCheckBox = (e) => {
+    if (e.target.checked) {
+      setinput({ ...input, isFeatured: e.target.checked })
+    }
+    else {
+      setinput({ ...input, isFeatured: e.target.checked })
+    }
   }
   const EditProduct = async () => {
-
+    let adminToken = localStorage.getItem('adminToken');
+    if (input.length > 0) {
+      return;
+    }
+    let form = new FormData();
+    form.append('id', id);
+    if (input.name) {
+      form.append('name', input.name);
+    }
+    if (input.description) {
+      form.append('description', input.description);
+    }
+    if (input.shortDescription) {
+      form.append('shortDescription', input.shortDescription);
+    }
+    if (input.price) {
+      form.append('price', input.price);
+    }
+    if (input.minPrice && input.maxPrice) {
+      form.append('minPrice', parseInt(input.minPrice));
+      form.append('maxPrice', parseInt(input.maxPrice));
+    }
+    if (input.heigth) {
+      form.append('heigth', input.height);
+    }
+    if (input.width) {
+      form.append('width', input.width);
+    }
+    if (input.length) {
+      form.append('length', input.length);
+    }
+    if (input.weight) {
+      form.append('weight', input.weight);
+    }
+    if (input.color) {
+      form.append('color', input.color);
+    }
+    // return;
+    // form.append('category', input.category);
+    // form.append('subCategory', input.subCategory);
+    // form.append('isFeatured', input.isFeatured);
+    let res = await fetch(EditProductUrl, {
+      method: "PUT",
+      headers: {
+        'boundary': 'MyBoundary',
+        'adminToken': adminToken
+      },
+      body: form
+    })
+    let data = await res.json();
+    if (data.success) {
+      let s = products.map((p) => {
+        if (p._id === id) {
+          return data.data
+        }
+        return p;
+      })
+      setproducts(s);
+    }
+    else {
+      alert(data.msg);
+    }
   }
-  const handleEdit = () => {
-
+  const handleEdit = (id) => {
+    setid(id);
+    console.log(id);
+    let b = products.filter((pro) => pro._id === id);
+    let a = b[0];
+    setinput(a);
   }
-  const element = ""
-  const refClose = () => {
 
+  const handleDelete = (id) => {
+    setid(id);
   }
+  const DeleteProduct = () => {
+    let adminToken = localStorage.getItem('adminToken');
+    if (!id) {
+      showAlert("Cannot Delete", 'danger');
+      return;
+    }
+    fetch(ProductDeleteUrl, {
+      method: "PUT",
+      headers: {
+        'Content-Type': 'application/json',
+        'adminToken': adminToken
+      },
+      body: JSON.stringify({
+        id: id
+      })
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success === true) {
+          // delete in the frontend
+          let newProducts = products.filter((element) => {
+            if (element._id !== id) {
+              return element
+            }
+            else {
+              element.isDeleted = true;
+              return element
+            }
+          })
+          setproducts(newProducts);
+          setid('');
+          showAlert("Deleted Successfully", 'success');
+        }
+        else {
+          showAlert(data.msg, 'danger');
+        }
+      })
+      .catch(err => {
+        console.log(err.message);
+      })
+  }
+
   return (
     <div>
       <div className="category_bar_left mobile_none">
@@ -77,63 +209,100 @@ const NewUIProducts = () => {
       </div>
 
 
-      <div class="container-fluid navdown mb-4 mt-4">
-        <div class="row mt-3 m-5 contain">
-          <div class="col-md-3 serch-box">
-            <div class="container-fluid">
-              <form class="d-flex">
-                <input type="text" class="form-control" style={{ "background-color": "#EAEAEA" }} placeholder="Search by Product Code" aria-label="Username" />
+      <div className="container-fluid navdown mb-4 mt-4">
+        <div className="row mt-3 m-5 contain">
+          <div className="col-md-3 serch-box">
+            <div className="container-fluid">
+              <form className="d-flex">
+                <input type="text" className="form-control" onChange={(e) => setsearch(e.target.value)} value={search} style={{ backgroundColor: "#EAEAEA" }} placeholder="Search by Product Code" aria-label="Username" />
               </form>
             </div>
 
           </div>
-          <div class="col-md-3 ">
-            <div class="dropdown">
-              <Link class="btn  dropdown-toggle" to="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+          {/* <div className="col-md-3 ">
+            <div className="dropdown">
+              <Link className="btn  dropdown-toggle" to="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                 Sort by
               </Link>
 
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <li><Link class="dropdown-item" to="#">Action</Link></li>
-                <li><Link class="dropdown-item" to="#">Another action</Link></li>
-                <li><Link class="dropdown-item" to="#">Something else here</Link></li>
+              <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <li><Link className="dropdown-item" to="#">Action</Link></li>
+                <li><Link className="dropdown-item" to="#">Another action</Link></li>
+                <li><Link className="dropdown-item" to="#">Something else here</Link></li>
               </ul>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 
       <div className="cards">
         {
-          products.map((pro, index) => {
-            return (
-              <div key={index} className="card">
-                <div className="card__image-container">
-                  <img
-                    src={backendurl + pro.img[0]}
-                    alt="image"
-                  />
+          search ?
+            products.map((pro, index) => {
+              let s = search.toLocaleLowerCase();
+              let name = pro.name.toLocaleLowerCase();
+              if (name.includes(s) || pro._id.includes(s)) {
+
+                return (
+                  <div key={index} className="card">
+                    <div className="card__image-container">
+                      <img
+                        src={backendurl + pro.img[0]}
+                        alt="image"
+                      />
+                    </div>
+                    <div className="card__content">
+                      <h4 className="card__title">
+                        {pro.name}
+                      </h4>
+                      <p ><b>1 Ton </b><small> (Min. Order)</small></p>
+                      {
+                        pro.price ?
+                          <h4 className="card__price">₹{pro.price}/-</h4>
+                          :
+                          <p>No Price for this product</p>
+                      }
+                    </div>
+                    <div className='d-flex justify-content-around mb-1'>
+                      <button className='btn btn-sm btn-warning' data-bs-toggle="modal" data-bs-target="#modelforedit" onClick={() => handleEdit(pro._id)}>Edit</button>
+                      <button className='btn btn-sm btn-danger' data-bs-toggle="modal" data-bs-target="#modelfordelete" onClick={() => handleDelete(pro._id)}>Delete</button>
+                    </div>
+                    {/* <i className="fa-solid .text-success fa-file-pen mx-2" role='button' data-bs-toggle="modal" data-bs-target="#modelforedit" onClick={() => handleEdit(element._id)}></i> */}
+                  </div>
+                )
+              }
+
+            })
+            :
+            products.map((pro, index) => {
+              return (
+                <div key={index} className="card">
+                  <div className="card__image-container">
+                    <img
+                      src={backendurl + pro.img[0]}
+                      alt="image"
+                    />
+                  </div>
+                  <div className="card__content">
+                    <h4 className="card__title">
+                      {pro.name}
+                    </h4>
+                    <p ><b>1 Ton </b><small> (Min. Order)</small></p>
+                    {
+                      pro.price ?
+                        <h4 className="card__price">₹{pro.price}/-</h4>
+                        :
+                        <p>No Price for this product</p>
+                    }
+                  </div>
+                  <div className='d-flex justify-content-around mb-1'>
+                    <button className='btn btn-sm btn-warning' data-bs-toggle="modal" data-bs-target="#modelforedit" onClick={() => handleEdit(pro._id)}>Edit</button>
+                    <button className='btn btn-sm btn-danger' data-bs-toggle="modal" data-bs-target="#modelfordelete" onClick={() => handleDelete(pro._id)}>Delete</button>
+                  </div>
+                  {/* <i className="fa-solid .text-success fa-file-pen mx-2" role='button' data-bs-toggle="modal" data-bs-target="#modelforedit" onClick={() => handleEdit(element._id)}></i> */}
                 </div>
-                <div className="card__content">
-                  <h4 className="card__title">
-                    {pro.name}
-                  </h4>
-                  <p ><b>1 Ton </b><small> (Min. Order)</small></p>
-                  {
-                    pro.price ?
-                      <h4 className="card__price">₹{pro.price}/-</h4>
-                      :
-                      <p>No Price for this product</p>
-                  }
-                </div>
-                <div className='d-flex justify-content-around mb-1'>
-                  <button className='btn btn-sm btn-warning' data-bs-toggle="modal" data-bs-target="#modelforedit" onClick={() => handleEdit(element._id)}>Edit</button>
-                  <button className='btn btn-sm btn-danger' data-bs-toggle="modal" data-bs-target="#modelforedit" onClick={() => handleEdit(element._id)}>Delete</button>
-                </div>
-                {/* <i className="fa-solid .text-success fa-file-pen mx-2" role='button' data-bs-toggle="modal" data-bs-target="#modelforedit" onClick={() => handleEdit(element._id)}></i> */}
-              </div>
-            )
-          })
+              )
+            })
         }
       </div>
       {/* Modal for editing */}
@@ -146,51 +315,61 @@ const NewUIProducts = () => {
             </div>
             <div className="modal-body">
               <form className="row g-3">
-                <div className="col-md-6">
+                <div className="col-md-12">
                   <label htmlFor="name" className="form-label">Name of the Product</label>
                   <input type="text" name='name' onChange={(e) => handleChange(e)} value={input.name || ''} className="form-control" id="name" />
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-12">
                   <label htmlFor="name" className="form-label">Description of the Product</label>
-                  <input type="text" name='description' onChange={(e) => handleChange(e)} value={input.description || ''} className="form-control" id="name" />
+                  <textarea name='description' onChange={(e) => handleChange(e)} value={input.description || ''} className="form-control" id="name" />
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-12">
                   <label htmlFor="name" className="form-label">Short Description</label>
-                  <input type="text" name='shortdescription' onChange={(e) => handleChange(e)} value={input.description || ''} className="form-control" id="shortdescription" />
-                </div>
-                <div className="col-md-6">
-                  <label htmlFor="modelName" className="form-label">Model Name</label>
-                  <input type="text" name='modelname' onChange={(e) => handleChange(e)} value={input.modelname || ''} className="form-control" id="modelName" />
+                  <input type="text" name='shortDescription' onChange={(e) => handleChange(e)} value={input.shortDescription || ''} className="form-control" id="shortdescription" />
                 </div>
 
                 <div className="col-md-2">
-                  <label htmlFor="price" className="form-label">Price</label>
-                  <input type="text" name='price' onChange={(e) => handleChange(e)} value={input.price || ''} className="form-control" id="price" />
-                </div>
-                <div className="col-md-2">
-                  <label htmlFor="priceRange" className="form-label">Price Range</label>
-                  <input type="text" name='priceRange' onChange={(e) => handleChange(e)} value={input.price || ''} className="form-control" id="priceRange" />
-                </div>
-                <div className="col-md-2">
                   <label htmlFor="length" className="form-label">Length</label>
-                  <input type="text" name='length' onChange={(e) => handleChange(e)} value={input.price || ''} className="form-control" id="length" />
+                  <input type="text" name='length' onChange={(e) => handleChange(e)} value={input.length || ''} className="form-control" id="length" />
                 </div>
                 <div className="col-md-2">
                   <label htmlFor="height" className="form-label">Height</label>
-                  <input type="text" name='height' onChange={(e) => handleChange(e)} value={input.price || ''} className="form-control" id="height" />
+                  <input type="text" name='height' onChange={(e) => handleChange(e)} value={input.height || ''} className="form-control" id="height" />
                 </div>
                 <div className="col-md-2">
                   <label htmlFor="width" className="form-label">Width</label>
-                  <input type="text" name='width' onChange={(e) => handleChange(e)} value={input.price || ''} className="form-control" id="width" />
+                  <input type="text" name='width' onChange={(e) => handleChange(e)} value={input.width || ''} className="form-control" id="width" />
                 </div>
                 <div className="col-md-2">
                   <label htmlFor="weight" className="form-label">Weight</label>
-                  <input type="text" name='weight' onChange={(e) => handleChange(e)} value={input.price || ''} className="form-control" id="weight" />
+                  <input type="text" name='weight' onChange={(e) => handleChange(e)} value={input.weight || ''} className="form-control" id="weight" />
+                </div>
+                <div className="col-md-4">
+                  <label htmlFor="color" className="form-label">Color</label>
+                  <input type="text" name='color' onChange={(e) => handleChange(e)} value={input.color || ''} className="form-control" id="color" />
                 </div>
                 <div className="col-md-2">
-                  <label htmlFor="color" className="form-label">Color</label>
-                  <input type="text" name='color' onChange={(e) => handleChange(e)} value={input.price || ''} className="form-control" id="color" />
                 </div>
+                <div className="col-md-4">
+                  <label htmlFor="price" className="form-label">Price</label>
+                  <input type="number" name='price' onChange={(e) => handleChange(e)} value={input.price || ''} className="form-control" id="price" />
+                </div>
+                <div className="col-md-3">
+                  <label htmlFor="maxPrice" className="form-label">MaxPrice</label>
+                  <input type="number" name='maxPrice' onChange={(e) => handleChange(e)} value={input.maxPrice || ''} className="form-control" id="priceRange" />
+                </div>
+                <div className="col-md-3">
+                  <label htmlFor="minPrice" className="form-label">MinPrice</label>
+                  <input type="number" name='minPrice' onChange={(e) => handleChange(e)} value={input.minPrice || ''} className="form-control" id="priceRange" />
+                </div>
+                <div className="col-md-3"></div>
+                <div className="form-check">
+                  <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" onChange={(e) => checkForCheckBox(e)} />
+                  <label className="form-check-label" htmlFor="flexCheckDefault">
+                    Featured
+                  </label>
+                </div>
+
                 <div className="container">
                   <section className="ImagePreview">
                     {/* <div className={iPCss.ImageInputContainer}> */}
@@ -208,7 +387,7 @@ const NewUIProducts = () => {
                     </label> */}
                     <br />
 
-                    <input className="ImagePreviewInput" type="file" multiple />
+                    {/* <input className="ImagePreviewInput" type="file" multiple /> */}
 
                     {/* {selectedImages.length === 0 ? "" : <div className="images">
                       {selectedImages &&
@@ -232,14 +411,34 @@ const NewUIProducts = () => {
                         })} 
                     </div>}
                         */}
-                    <i className="fa-solid fa-file-pen mx-2" role='button' data-bs-toggle="modal" data-bs-target="#modelforedit" onClick={() => handleEdit(element._id)}>E</i>
+                    {/* <i className="fa-solid fa-file-pen mx-2" role='button' data-bs-toggle="modal" data-bs-target="#modelforedit" onClick={() => handleEdit(element._id)}>E</i> */}
                   </section>
                 </div>
               </form>
             </div>
             <div className="modal-footer">
-              <button ref={refClose} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
               <button type="button" onClick={EditProduct} className="btn btn-primary" data-bs-dismiss="modal">Update Product</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      {/* <!-- Modal for deletion--> */}
+      <div className="modal fade" id="modelfordelete" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="staticBackdropLabel">Deleting Product</h5>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div className="modal-body">
+              Are you sure ? Move to Trash!!!
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" className="btn btn-primary" onClick={DeleteProduct} data-bs-dismiss="modal">Delete Product</button>
             </div>
           </div>
         </div>
