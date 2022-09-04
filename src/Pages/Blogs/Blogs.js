@@ -306,23 +306,25 @@ const Blogs = (props) => {
                                         // for no search filter 
 
                                         blogs.map((element, index) => {
-                                            return <tbody key={index}>
-                                                <tr>
-                                                    <td>{index + 1}</td>
-                                                    <td style={{ width: '15%' }}>{element.title}</td>
-                                                    <td className='description' style={{ width: '50%' }}>{element.description}</td>
-                                                    <td className='image'> <img style={{ height: '80px', width: '150px', borderRadius: '10px' }} src={backendurl + element.img} alt="Blog Image" ></img> </td>
-                                                    <td>{element.isDeleted ? "Deleted" : "Active"}</td>
-                                                    <td>
-                                                        <i className="fa-solid fa-trash mx-2" role='button' onClick={() => { setId(element._id) }} data-bs-toggle="modal" data-bs-target="#staticBackdrop">D</i>
-                                                        <i className="fa-solid fa-file-pen mx-2" role='button' data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { handleEdit(element._id) }}>E</i>
-                                                        {
-                                                            element.isDeleted &&
-                                                            <i className="fa-solid fa-file-pen mx-2" role='button' data-bs-toggle="modal" data-bs-target="#modelforundo" onClick={() => { setId(element._id) }}>U</i>
-                                                        }
-                                                    </td>
-                                                </tr>
-                                            </tbody>
+                                            if (index >= indexOfFirst && index < indexOfLast) {
+                                                return <tbody key={index}>
+                                                    <tr>
+                                                        <td>{index + 1}</td>
+                                                        <td style={{ width: '15%' }}>{element.title}</td>
+                                                        <td className='description' style={{ width: '50%' }}>{element.description}</td>
+                                                        <td className='image'> <img style={{ height: '80px', width: '150px', borderRadius: '10px' }} src={backendurl + element.img} alt="Blog Image" ></img> </td>
+                                                        <td>{element.isDeleted ? "Deleted" : "Active"}</td>
+                                                        <td>
+                                                            <i className="fa-solid fa-trash mx-2" role='button' onClick={() => { setId(element._id) }} data-bs-toggle="modal" data-bs-target="#staticBackdrop">D</i>
+                                                            <i className="fa-solid fa-file-pen mx-2" role='button' data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { handleEdit(element._id) }}>E</i>
+                                                            {
+                                                                element.isDeleted &&
+                                                                <i className="fa-solid fa-file-pen mx-2" role='button' data-bs-toggle="modal" data-bs-target="#modelforundo" onClick={() => { setId(element._id) }}>U</i>
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            }
                                         }
                                         )
                                 }
