@@ -24,3 +24,7 @@ yarn-error.log*
 
 # Local Netlify folder
 .netlify
+
+
+    # "react-multi-select-component": "^4.2.9",
+    # "react-multiselect-checkboxes": "^0.1.1",
