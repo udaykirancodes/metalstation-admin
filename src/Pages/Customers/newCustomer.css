@@ -1,0 +1,90 @@
+.customerpage{
+    margin-top: 4rem;
+
+}
+.marginform{
+    margin-left: 2rem;
+    }
+.drop1{
+    position: relative;
+    font-size: 14px;
+    left: 30%;   
+}
+
+.drop2{
+    position: relative;
+    font-size: 14px;
+    left: 20%;
+}
+
+.dropdown a{
+    background-color: rgba(217, 217, 217, 0.37);
+    color: #828282;
+    border: 1px solid rgba(69, 69, 69, 1);
+}
+.navdown{
+    position: relative;
+    right: 4%;
+}
+
+/* table */
+.table{
+    border: 1px solid rgba(193, 193, 193, 1);
+}
+td,th{
+    vertical-align: middle
+}
+.table thead{
+    background-color: #24A1FD;
+    color: #FFFFFF;
+    font-size: 16px;
+    text-align: center;
+}
+.table tbody{
+    color: #3F3F3F;
+    font-size: 16px;
+    text-align: center;
+}
+.view{
+    color: rgba(63, 63, 63, 1);
+    cursor: pointer;
+    text-decoration: underline;
+}
+.view:hover{
+    color: blueviolet;
+}
+/* view*/
+.modal-body{
+    text-align: start;
+    font-size: 16;
+    color:  rgba(117, 117, 117, 1);
+}
+.modal-body b{
+    font-size: 24px;
+    color: rgba(0, 0, 0, 1);
+
+}
+
+.user i{
+    font-size: 100px;
+    color: #24A1FD;
+}
+.bg-box{
+    box-shadow:2px 2px 2px 2px rgba(0, 0, 0, 0.16);
+}
+/* POP-up */
+.user1 h5{
+   color:  #24A1FD;
+   font-size: 16px;
+}
+.user1 p{
+    font-size: 12px;
+}
+.user1 span{
+    font-weight: 500;
+    color: #19AF01;
+    font-size: 16px;
+}
+.btn-close{
+    margin-left: 420px;
+}
