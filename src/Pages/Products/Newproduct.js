@@ -10,14 +10,19 @@ import Context from '../../context/Context';
 
 const Newproduct = (props) => {
 
-
+    const navigate = useNavigate();
     // Image Preiview start 
     const [selectedImages, setSelectedImages] = useState([]);
 
     const { products, setproducts } = useContext(Context);
 
     const [final, setFinal] = useState([]);
-
+    useEffect(() => {
+        let token = localStorage.getItem('adminToken');
+        if (!token) {
+            navigate('/login');
+        }
+    }, [])
     useEffect(() => {
         console.log(final);
     }, [final])
@@ -52,7 +57,7 @@ const Newproduct = (props) => {
 
     // Image Preiview End 
 
-    const navigate = useNavigate();
+
     const { showAlert } = props;
 
     useEffect(() => {
