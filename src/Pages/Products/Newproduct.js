@@ -32,9 +32,6 @@ const Newproduct = (props) => {
         console.log(event.target.files);
         const selectedFiles = event.target.files;
 
-
-
-
         const selectedFilesArray = Array.from(selectedFiles);
 
         const imagesArray = selectedFilesArray.map((file) => {
