@@ -11,6 +11,14 @@ const Enquiry = () => {
 
   const [search, setSearch] = useState('');
 
+  useEffect(() => {
+    let token = localStorage.getItem('adminToken');
+    if (!token) {
+      navigate('/login')
+      return;
+    }
+  }, [])
+
   // pagination related code 
   const [currentpage, setcurrentpage] = useState(1);
   const [perPage, setPerPage] = useState(5);

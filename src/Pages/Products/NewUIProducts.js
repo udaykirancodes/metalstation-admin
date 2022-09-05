@@ -1,13 +1,15 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import './newuiproducts.css'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Context from '../../context/Context';
 import { backendurl, EditProductUrl, ProductDeleteUrl } from '../../urls';
 import Pagination from '../../components/Pagination';
 
 
 const NewUIProducts = ({ showAlert }) => {
+
+  const navigate = useNavigate()
 
   const [arrowUp, setArrowUp] = useState(false);
   const [input, setinput] = useState({
@@ -24,6 +26,13 @@ const NewUIProducts = ({ showAlert }) => {
     weight: '',
     color: ''
   });
+  useEffect(() => {
+    let token = localStorage.getItem('adminToken');
+    if (!token) {
+      navigate('/login')
+      return;
+    }
+  }, [])
   const { products, setproducts } = useContext(Context);
   const [id, setid] = useState('');
   const [search, setsearch] = useState('');

@@ -304,7 +304,6 @@ const Blogs = (props) => {
                                     })
                                         :
                                         // for no search filter 
-
                                         blogs.map((element, index) => {
                                             if (index >= indexOfFirst && index < indexOfLast) {
                                                 return <tbody key={index}>

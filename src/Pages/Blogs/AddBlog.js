@@ -28,6 +28,13 @@ const AddBlog = (props) => {
         description: '',
         img: ''
     })
+    useEffect(() => {
+        let token = localStorage.getItem('adminToken');
+        if (!token) {
+            navigate('/login')
+            return;
+        }
+    }, [])
 
     const handleInput = (e) => {
         setblog({ ...blog, [e.target.name]: e.target.value });
